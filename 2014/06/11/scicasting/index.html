@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      GitHub repository for my forecasting code &middot; hypercomplex
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>hypercomplex</h1>
+      <p class="lead">sure hope it looks harder than it was</p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-item">
+        <a href="/">Home</a>
+      </li>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/about/">About</a>
+            </li>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/prettygood/">Pretty Good</a>
+            </li>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        <a href="/atom.xml">atom</a>
+      </li>
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        jay kominek <code>kominek</code> <code>@</code> <code>gmail.com</code>
+      </li>
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        <a href="http://twitter.com/JayKominek">@JayKominek</a>, i guess
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">GitHub repository for my forecasting code</h1>
+  <span class="post-date">11 June 2014</span>
+  <p>I’ve put up a <a href="https://github.com/jkominek/scicasting/">GitHub repository</a>
+of the code I’ve used to aid my forecasting.</p>
+
+<p>Right now I’ve just got the <a href="http://hypercomplex.net/2014/06/08/scicast-bluefin-genie/">previously discussed Bluefin-21
+model</a>, a
+model for the <a href="https://scicast.org/#!/questions/653/safe">“Will NASA land a telepresence robot on Venus by
+2020?”</a> question, and some
+code that pulls down citation information from Google Scholar and
+crunches it for <a href="https://scicast.org/#!/questions/462/safe">“Will there be at least one female winner of a Fields
+Medal in 2014?”</a>.</p>
+
+<p class="message">
+venus launch windows
+</p>
+
+<p>My Venus model presupposes there are three launch windows (2015, 2016
+and 2018) for Venus. I also mention that in my comment on SciCast,
+though I don’t mention how I determined that.</p>
+
+<p>I’m going to assume you have a reasonable mental model of planets, and
+their orbits around the Sun. Further, you believe that with current
+propulsion techniques, there are better and worse times to launch when
+you want to get to another planet.</p>
+
+<p>Ok, first step, you hit up <a href="http://ssd.jpl.nasa.gov/horizons.cgi">JPL’s
+HORIZONS</a> web site. Set your
+Target Body to Venus (it’ll be 299; that’s the <a href="http://naif.jpl.nasa.gov/naif/toolkit.html">NAIF
+SPICE</a> ID for Venus), the
+Time Span to run from 2014-7-1 to 2020-1-1 with a step size of 1
+calendar month. Pull up the table settings and turn off everything
+except #20 Observer range &amp; range-rate. Hit Generate Ephemeris. Bam,
+you’ve got a table of how far apart Venus and the Earth are, on a
+monthly basis, for the chunk of time under consideration in the
+question.</p>
+
+<p>You could plot it, and you’d get something looking suspiciously
+like this:</p>
+
+<p><img src="/assets/2014/06/venus.png" alt="Earth-Venus Distance 2014-06 to 2020-01" /></p>
+
+<p>Hey look, three dips, almost in the three years I mention. Those
+correspond to the points when the planets are closest, and are roughly
+the best time to try and get from the Earth to Venus. Since Venus zips
+around the Sun quite a bit faster than the Earth, every close approach
+is Venus “catching up” with us.</p>
+
+<p>The best plan for launching, then, is to kick it out of orbit into the
+direction of Venus, and let Venus catch up to it. The transit then
+just takes a few months. You can work out a good time to launch by
+shaving a few months off each of the minimums on the graph. That’s why
+the 2017 dip corresponds to a (late) 2016 launch window.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/04/24/last-line/">
+            The Last Line Effect and Extralinguistic Mechanisms
+            <small>24 Apr 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/08/17/musical-interlude-1/">
+            Musical Interlude 1
+            <small>17 Aug 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/08/02/lmsr-interactive/">
+            LMSR Made Interactive
+            <small>02 Aug 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

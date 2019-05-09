@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      hypercomplex &middot; aww yeah
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>hypercomplex</h1>
+      <p class="lead">sure hope it looks harder than it was</p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-item active">
+        <a href="/">Home</a>
+      </li>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/about/">About</a>
+            </li>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/prettygood/">Pretty Good</a>
+            </li>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        <a href="/atom.xml">atom</a>
+      </li>
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        jay kominek <code>kominek</code> <code>@</code> <code>gmail.com</code>
+      </li>
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        <a href="http://twitter.com/JayKominek">@JayKominek</a>, i guess
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2015/04/24/last-line/">
+        The Last Line Effect and Extralinguistic Mechanisms
+      </a>
+    </h1>
+
+    <span class="post-date">24 Apr 2015</span>
+
+    <p>Since the release of the <a href="http://www.ccs.neu.edu/home/matthias/manifesto/">Racket
+Manifesto</a> by
+Felleisen, et al. it has become a thesis of mine that normal
+programmers face, on a regular basis, real problems which could be
+alleviated by the sorts of macro mechanisms offered by Racket (and to
+a lesser extent, other Lisps). I’ve got in mind some in-depth
+investigations I’d like to perform to really back this argument up,
+but until I have time for that, a recent article will serve as a
+sort of teaser for what I’ve got in mind.</p>
+
+<p>Andrey Karpov wrote in the “<a href="https://software.intel.com/en-us/blogs/2015/04/22/the-last-line-effect">The Last Line
+Effect</a>”:</p>
+
+<blockquote>
+  <p>When writing program code, programmers often have to write a series
+of similar constructs. Typing the same code several times is boring
+and inefficient. That’s why they use the Copy-Paste method: a code
+fragment is copied and pasted several times with further
+editing. Everyone knows what is bad about this method: you risk
+easily forgetting to change something in the pasted lines and thus
+giving birth to errors. <strong>Unfortunately, there is often no better
+alternative to be found.</strong></p>
+</blockquote>
+
+<blockquote>
+  <p>Now let’s speak of the pattern I discovered. I figured out that
+mistakes are most often made in the last pasted block of code.</p>
+</blockquote>
+
+<p>Andrey goes on to provide some evidence for his assertion. I think
+he’s on to something, and it makes sense. You do your pasting, then
+you set your hands in motion with some repeated delete delete delete
+type type type down arrow, repeat. By the time you’ve done that three
+or four times, your mind is numb, your eyes are glazed, and the
+muscles aren’t being supervised anymore.</p>
+
+<p>I’d like to point out and discuss two of his examples:</p>
+
+<h3 id="example-chromium">Example, Chromium</h3>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">if</span> <span class="p">(</span><span class="n">access</span> <span class="o">&amp;</span> <span class="n">FILE_WRITE_ATTRIBUTES</span><span class="p">)</span>
+  <span class="n">output</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">ASCIIToUTF16</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">FILE_WRITE_ATTRIBUTES</span><span class="se">\n</span><span class="s">"</span><span class="p">));</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">access</span> <span class="o">&amp;</span> <span class="n">FILE_WRITE_DATA</span><span class="p">)</span>
+  <span class="n">output</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">ASCIIToUTF16</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">FILE_WRITE_DATA</span><span class="se">\n</span><span class="s">"</span><span class="p">));</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">access</span> <span class="o">&amp;</span> <span class="n">FILE_WRITE_EA</span><span class="p">)</span>
+  <span class="n">output</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">ASCIIToUTF16</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">FILE_WRITE_EA</span><span class="se">\n</span><span class="s">"</span><span class="p">));</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">access</span> <span class="o">&amp;</span> <span class="n">FILE_WRITE_EA</span><span class="p">)</span>
+  <span class="n">output</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">ASCIIToUTF16</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">FILE_WRITE_EA</span><span class="se">\n</span><span class="s">"</span><span class="p">));</span>
+<span class="k">break</span><span class="p">;</span></code></pre></figure>
+
+<p>They’ve got some bitmasks that are referenced via variables (they’re
+probably <code class="highlighter-rouge">#define</code>s, but it doesn’t matter), and when the relevant
+bits are set, they’d like to write out the name of the bitmask that
+was set. Turns out this could actually be implemented as a function:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">check_and_append</span><span class="p">(</span><span class="n">access</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">access</span> <span class="o">&amp;</span> <span class="n">mask</span><span class="p">)</span>
+    <span class="n">output</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">ASCIIToUTF16</span><span class="p">(</span><span class="n">concat</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="p">...</span>
+<span class="n">check_and_append</span><span class="p">(</span><span class="n">access</span><span class="p">,</span> <span class="n">FILE_WRITE_ATTRIBUTES</span><span class="p">,</span>
+                 <span class="n">output</span><span class="p">,</span> <span class="s">"FILE_WRITE_ATTRIBUTES"</span><span class="p">);</span>
+<span class="p">...</span></code></pre></figure>
+
+<p>Hmm. Not really an improvement. We’re still duplicating things. And
+the repetition of <code class="highlighter-rouge">access</code> and <code class="highlighter-rouge">output</code> is tedious. I’d expect most
+programmers to copy and paste the function call. Back where we started.</p>
+
+<p>The C macro system happens to be powerful enough to address this case:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#define C_A(a,o,s) \
+  if (a &amp; s) \
+      o.append(ASCIIToUTF16("\t" #s "\n"));
+</span>
+<span class="n">C_A</span><span class="p">(</span><span class="n">access</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">FILE_WRITE_ATTRIBUTES</span><span class="p">)</span></code></pre></figure>
+
+<p>will expand to what we want.</p>
+
+<p>This accomplishes our goal, because the macro is able to see the symbol
+<code class="highlighter-rouge">FILE_WRITE_ATTRIBUTES</code>, rather than just the value of <code class="highlighter-rouge">0x00100</code> or whatever
+it might happen to be.</p>
+
+<p>We could shorten the uses of <code class="highlighter-rouge">C_A</code> by having the macro definition
+refer directly to <code class="highlighter-rouge">access</code> and <code class="highlighter-rouge">output</code>. But sooner or later, that
+will trip over standard <a href="http://en.wikipedia.org/wiki/Hygienic_macro">macro
+hygiene</a> problems.</p>
+
+<h3 id="example-multi-theft-auto">Example, Multi Theft Auto</h3>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">CWaterPoly</span><span class="o">*</span> <span class="n">CWaterManagerSA</span><span class="o">::</span><span class="n">CreateQuad</span> <span class="p">(....)</span>
+<span class="p">{</span>
+  <span class="p">....</span>
+  <span class="n">pInterface</span><span class="o">-&gt;</span><span class="n">m_wVertexIDs</span> <span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="n">pV1</span><span class="o">-&gt;</span><span class="n">GetID</span> <span class="p">();</span>
+  <span class="n">pInterface</span><span class="o">-&gt;</span><span class="n">m_wVertexIDs</span> <span class="p">[</span> <span class="mi">1</span> <span class="p">]</span> <span class="o">=</span> <span class="n">pV2</span><span class="o">-&gt;</span><span class="n">GetID</span> <span class="p">();</span>
+  <span class="n">pInterface</span><span class="o">-&gt;</span><span class="n">m_wVertexIDs</span> <span class="p">[</span> <span class="mi">2</span> <span class="p">]</span> <span class="o">=</span> <span class="n">pV3</span><span class="o">-&gt;</span><span class="n">GetID</span> <span class="p">();</span>
+  <span class="n">pInterface</span><span class="o">-&gt;</span><span class="n">m_wVertexIDs</span> <span class="p">[</span> <span class="mi">3</span> <span class="p">]</span> <span class="o">=</span> <span class="n">pV4</span><span class="o">-&gt;</span><span class="n">GetID</span> <span class="p">();</span>
+  <span class="p">....</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Ok, again, a C macro could help:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#define setter(i) \
+  {pInterface-&gt;m_wVertexIDs [ (i-1) ] = (pV ## i)-&gt;GetID ();}
+</span>   <span class="p">....</span>
+   <span class="n">setter</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+   <span class="n">setter</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+   <span class="n">setter</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+   <span class="n">setter</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+   <span class="p">....</span></code></pre></figure>
+
+<p>But, come on, this begs to be in a <code class="highlighter-rouge">for</code> loop:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#define setter(i) \
+  {pInterface-&gt;m_wVertexIDs [ (i-1) ] = (pV ## i)-&gt;GetID ();}
+</span>   <span class="p">....</span>
+   <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="mi">4</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">setter</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+   <span class="p">}</span>
+   <span class="p">....</span></code></pre></figure>
+
+<p>And, unsurprisingly, that doesn’t work. Perhaps a more clever C
+preprocessor could notice that the <code class="highlighter-rouge">for</code> loop is static, and generate
+all of the appropriate code. Maybe there’s even some option I don’t
+remember floating around that would work with existing preprocessors.
+Frankly, I’m pleased I remember how to do the stringification and
+concatenation.</p>
+
+<p>We could write a Racket macro that covers this:</p>
+
+<figure class="highlight"><pre><code class="language-racket" data-lang="racket"><span class="p">(</span><span class="k">define-syntax</span> <span class="p">(</span><span class="nf">assign</span> <span class="nv">stx</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">trailing-digits</span> <span class="nv">expr</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">string-&gt;number</span>
+      <span class="p">(</span><span class="nb">regexp-replace*</span> <span class="o">#</span><span class="nv">px"^</span><span class="o">.</span><span class="nv">*?</span><span class="p">(</span><span class="nf">\\d+</span><span class="p">)</span><span class="nv">$"</span>
+                       <span class="p">(</span><span class="nb">symbol-&gt;string</span> <span class="p">(</span><span class="nf">syntax-&gt;datum</span> <span class="nv">expr</span><span class="p">))</span>
+                       <span class="s">"\\1"</span><span class="p">)))</span>
+  <span class="p">(</span><span class="k">syntax-case</span> <span class="nv">stx</span> <span class="p">()</span>
+    <span class="p">[(</span><span class="nf">_</span> <span class="nv">target</span> <span class="nv">source</span> <span class="o">...</span><span class="p">)</span>
+     <span class="p">(</span><span class="k">with-syntax</span> <span class="p">([(</span><span class="nf">i</span> <span class="o">...</span><span class="p">)</span>
+                    <span class="p">(</span><span class="nb">map</span> <span class="nv">trailing-digits</span>
+		         <span class="p">(</span><span class="nb">syntax-&gt;list</span> <span class="o">#'</span><span class="p">(</span><span class="nf">source</span> <span class="o">...</span><span class="p">)))])</span>
+       <span class="o">#'</span><span class="p">(</span><span class="k">begin</span>
+           <span class="p">(</span><span class="nb">vector-set!</span> <span class="nv">target</span> <span class="p">(</span><span class="nb">sub1</span> <span class="nv">i</span><span class="p">)</span> <span class="nv">source</span><span class="p">)</span>
+           <span class="o">...</span><span class="p">))]))</span></code></pre></figure>
+
+<p>That’s not short. But if you’re going to be writing a lot of code
+where you want to pull values out of variables with numbers in their
+names, and stuff those values into corresponding positions in arrays,
+wouldn’t it be nice to have? How many times would you need to use it
+before it became worth the effort, in order to avoid the copying and
+pasting?</p>
+
+<p>How much effort would it be worth to eliminate a class of errors?</p>
+
+<h3 id="finally">Finally</h3>
+
+<p>Refer back to the bold portion of Andrey’s text: “<strong>there is often
+no better alternative to be found</strong>”. What? We’re programming! We’re
+providing instructions to a machine, which will be faithfully executed
+on our behalf, regardless of how tedious and repetitive they may be,
+and there’s <strong>no better alternative</strong> than copying and pasting?</p>
+
+<p>When the Racket manifesto discusses Racket’s design principles, the
+authors write:</p>
+
+<blockquote>
+  <p>When programmers must resort to extra-linguistic mechanisms to solve
+a problem, <strong>the chosen language has failed them</strong>.</p>
+</blockquote>
+
+<p>I assert that copying and pasting code is an extra-linguistic
+mechanism for expressing repetition the language is incapable of. When
+you are left with no choice but to copy and paste code, your language
+has failed you.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2014/08/17/musical-interlude-1/">
+        Musical Interlude 1
+      </a>
+    </h1>
+
+    <span class="post-date">17 Aug 2014</span>
+
+    <iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/163611134&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>
+
+<p>Sorry about all the fancy embedded things.</p>
+
+<p>More SciCast-related CDF’s coming soon.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2014/08/02/lmsr-interactive/">
+        LMSR Made Interactive
+      </a>
+    </h1>
+
+    <span class="post-date">02 Aug 2014</span>
+
+    <p>The <a href="http://hanson.gmu.edu/mktscore.pdf">Logarithmic Market Scoring
+Rule</a> (LMSR) is the rule which
+governs the price of trades on
+<a href="http://www.scicast.org/">SciCast</a>. SciCast’s predecessor, DAGGRE,
+produced a <a href="http://blog.daggre.org/2012/07/11/daggre-scoring-tutorial/">tutorial video on the
+LMSR</a>.</p>
+
+<p>I thought it might help if people could play with the LMSR directly,
+to get a feel for how it behaves. I looked around at my options for
+making interactive mathematical plots, and decided that the best option
+for the amount of time I was willing to put in was Mathematica CDF
+files. You’ll need the
+<a href="http://www.wolfram.com/cdf-player/">CDF player</a> installed.</p>
+
+<script type="text/javascript" src="http://www.wolfram.com/cdf-player/plugin/v2.1/cdfplugin.js"></script>
+
+<script type="text/javascript">
+var cdf = new cdfplugin();
+cdf.setDefaultContent('<a href="http://www.wolfram.com/cdf-player/"><img src="/assets/2014/08/LMSR-only.png"></a>');
+cdf.embed('/assets/2014/08/LMSR-only.cdf', 716, 485);
+</script>
+
+<p>You should have two sliders, “start” and “tradeto”, as well as a graph
+with two curves on it, one red, the other green. If not, something has
+gone awry. Sorry.</p>
+
+<p>The value of “start” represents where the trade is starting from; the
+current state of the market. “tradeto” is the value of the trade you’re
+considering making (this assumes power mode). “start” and “tradeto” are
+depicted visually on the graph by vertical lines labelled “S” and “T”.
+“start” controls a second line, labelled ▽.</p>
+
+<p>Where T intersects with the Yes (green) and No (red) lines, there is a
+number which is the points you’ll gain (positive) or lose (negative),
+if the question resolves as Yes, or No, respectively. Between the S
+and ▽ lines, any trade you make has the potential to earn more than it
+risks.  Everywhere between those lines has <a href="http://en.wikipedia.org/wiki/Fixed-odds_betting">decimal
+odds</a> of ≥2.0.</p>
+
+<p>I have a number of other interactive graphs I’m planning to put up,
+but I’m still tweaking them. If you’ve got access to Mathematica, and
+you’d care to root around in my <a href="http://github.com/jkominek/scicasting/">scicasting
+repo</a> you can find my
+more-or-less in progress Mathematica notebook where I’m developing
+them.</p>
+
+<p>On a programming note, these graphs are the most complicated things
+I’ve ever bothered to do in Mathematica. I’m pleased to discover that
+a lot of the horrifying looking Mathematica code I’ve seen on their
+blog, and elsewhere on the Internet over the years, was much worse
+than it had to be. Apparently nobody believes in adding whitespace to
+format things nicely. On the downside, it still hurts to read.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2014/06/11/scicasting/">
+        GitHub repository for my forecasting code
+      </a>
+    </h1>
+
+    <span class="post-date">11 Jun 2014</span>
+
+    <p>I’ve put up a <a href="https://github.com/jkominek/scicasting/">GitHub repository</a>
+of the code I’ve used to aid my forecasting.</p>
+
+<p>Right now I’ve just got the <a href="http://hypercomplex.net/2014/06/08/scicast-bluefin-genie/">previously discussed Bluefin-21
+model</a>, a
+model for the <a href="https://scicast.org/#!/questions/653/safe">“Will NASA land a telepresence robot on Venus by
+2020?”</a> question, and some
+code that pulls down citation information from Google Scholar and
+crunches it for <a href="https://scicast.org/#!/questions/462/safe">“Will there be at least one female winner of a Fields
+Medal in 2014?”</a>.</p>
+
+<p class="message">
+venus launch windows
+</p>
+
+<p>My Venus model presupposes there are three launch windows (2015, 2016
+and 2018) for Venus. I also mention that in my comment on SciCast,
+though I don’t mention how I determined that.</p>
+
+<p>I’m going to assume you have a reasonable mental model of planets, and
+their orbits around the Sun. Further, you believe that with current
+propulsion techniques, there are better and worse times to launch when
+you want to get to another planet.</p>
+
+<p>Ok, first step, you hit up <a href="http://ssd.jpl.nasa.gov/horizons.cgi">JPL’s
+HORIZONS</a> web site. Set your
+Target Body to Venus (it’ll be 299; that’s the <a href="http://naif.jpl.nasa.gov/naif/toolkit.html">NAIF
+SPICE</a> ID for Venus), the
+Time Span to run from 2014-7-1 to 2020-1-1 with a step size of 1
+calendar month. Pull up the table settings and turn off everything
+except #20 Observer range &amp; range-rate. Hit Generate Ephemeris. Bam,
+you’ve got a table of how far apart Venus and the Earth are, on a
+monthly basis, for the chunk of time under consideration in the
+question.</p>
+
+<p>You could plot it, and you’d get something looking suspiciously
+like this:</p>
+
+<p><img src="/assets/2014/06/venus.png" alt="Earth-Venus Distance 2014-06 to 2020-01" /></p>
+
+<p>Hey look, three dips, almost in the three years I mention. Those
+correspond to the points when the planets are closest, and are roughly
+the best time to try and get from the Earth to Venus. Since Venus zips
+around the Sun quite a bit faster than the Earth, every close approach
+is Venus “catching up” with us.</p>
+
+<p>The best plan for launching, then, is to kick it out of orbit into the
+direction of Venus, and let Venus catch up to it. The transit then
+just takes a few months. You can work out a good time to launch by
+shaving a few months off each of the minimums on the graph. That’s why
+the 2017 dip corresponds to a (late) 2016 launch window.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2014/06/08/scicast-bluefin-genie/">
+        SciCast, Bluefin-21, and GeNIe
+      </a>
+    </h1>
+
+    <span class="post-date">08 Jun 2014</span>
+
+    <p>I’m going to assume you’re familiar with
+<a href="https://scicast.org/#!/about">SciCast</a>; if you aren’t, that link is the
+place to start. Or maybe <a href="http://en.wikipedia.org/wiki/SciCast">Wikipedia</a>.</p>
+
+<p>There has been a open question on SciCast, <a href="https://scicast.org/#!/questions/464/safe">“Will Bluefin-21 locate
+the black box from Malaysian Airlines flight
+MH-370?”</a>, since mid-April.
+(If you don’t know what <a href="http://en.wikipedia.org/wiki/MH370">MH370</a>
+is, I envy you.) It <a href="https://scicast.org/#!/questions/464/trades/safe">dropped fairly
+quickly</a> to
+predicting that there was a 10% chance of Bluefin-21 locating MH370.
+Early on, that was reasonable enough. There was evidence pings from
+the black box had been detected in the region, so the entire Indian
+Ocean had been narrowed down to a relatively small area.</p>
+
+<p>Unfortunately weeks passed and on May 29th <a href="http://www.bbc.com/news/world-asia-27615173">Bluefin-21’s mission was
+completed</a>,
+unsuccessfully. Bluefin-21 then stopped looking. At this point, I (and
+others) expected the forecast to plummet. But folks kept
+pushing it back up. In fact I count about 5 or 6 distinct individuals
+who moved the probability up after completion of the mission. There
+are perfectly good reasons related to the nature of the prediction
+market for some of those adjustments.</p>
+
+<p>I’m interested in the bad reasons.</p>
+
+<p>One of the bad reasons that could apply to any question, but seems to
+be a very likely candidate for this question, is being unaware of the
+state of the world. Forecasting the future when you don’t know the
+present just isn’t going to turn out very well. In the best case,
+you’ve got really good priors, and you’re stuck working off of
+those. Realistically, your priors aren’t that great. Evidence could
+help them out, but you’re not updating.</p>
+
+<p>In the specific case of the Bluefin-21, it was suggested (by someone
+with whom I have no beef, and am not trying to single out!) that there
+was still a chance MH370 would be discovered by going back and
+reanalyzing the data.</p>
+
+<p>This didn’t seem at all likely to me. I attempted to explain why,
+though in retrospect I think my explanation was poor, and incomplete.</p>
+
+<p>To formalize my reasoning, I hunted around for a software tool that
+would let me crunch the numbers and make a diagram. I turned up
+<a href="http://genie.sis.pitt.edu/">GeNIe</a>, which looked appropriate for the
+task. GeNIe is a GUI on top of SMILE, which is a software library for
+(<em>hand</em> <em>wave</em>) modeling <a href="http://en.wikipedia.org/wiki/Bayesian_network">Bayesian
+networks</a>.</p>
+
+<p>I ended up producing this model and looks like this:</p>
+
+<p><img src="/assets/2014/06/bluefin-before-evidence.png" alt="Before Evidence" /></p>
+
+<p>(If you want to fiddle with the model, you can <a href="/assets/2014/06/bluefin-model.xdsl">download it
+here</a>.)</p>
+
+<p>This model assumes Bluefin-21 is 90% effective on the first pass, and
+reanalysis has a 20% chance to find MH370 if it was missed. It also
+assumes that reanalysis will almost certainly happen, but that there
+is only a 10% chance that MH370 is even in the search area. I feel
+that’s generous given the search area, and nature of the acoustic
+evidence. (I never thought the surface debris was likely to be
+related.  There’s a <a href="http://en.wikipedia.org/wiki/Great_Pacific_garbage_patch">lot of crap in the
+ocean</a>. That
+they found so little is just evidence of the size of the ocean.)</p>
+
+<p>Based on all of that, the model says there’s a 9% chance Bluefin-21 would
+find MH370. Which is about where the SciCast prediction was at. The
+other forecasters might’ve been giving the pings more credit. Anyways,
+we’re kind of in the ballpark. So let’s now tell the model that Bluefin-21
+didn’t find MH370 on the first pass, and see what it says:</p>
+
+<p><img src="/assets/2014/06/bluefin-after-evidence.png" alt="After Evidence" /></p>
+
+<p>Weee, the chance that Bluefin-21 will find anything has now dropped to
+basically zero. And that’s because not finding the MH370 on the first
+pass is evidence that it isn’t there, even if Bluefin-21 is
+imperfect. In fact, the better Bluefin-21 is, the stronger the
+evidence of absence. For any chance of detection to remain, Bluefin-21
+would have to be good at collecting data, but the analysis would have
+to be awful and error prone, unless you repeated it. I didn’t attempt
+to model that in, because it would be so weird.</p>
+
+<p>First, sonar is well understood, and Bluefin-21 was using COTS units
+that basically produce a elevation model of the ocean floor. Second,
+if “trying harder” upped the odds of detection, then the operators
+would throw more CPU or man power at it until they’d raised the
+likelihood of detection as high as it was reasonably going to go. The
+cost of the search had hit at least $44 million before Bluefin-21 got
+wet; some additional data analysis isn’t going to put a dent in that.
+(Maybe you could find a signal processing researcher to apply some
+cutting edge stuff, but if that didn’t happen at the start of the
+search, I don’t think it’ll happen before the question expires.)</p>
+
+<p>This question is pretty much over, but if you have suggestions for
+making the model better, I’d be interested in hearing them. This is
+the first thing I’ve done with this sort of modeling tool. So I’m
+sure some things could be done better.</p>
+
+<p class="message">
+next?
+</p>
+
+<p>I plan to make further use of GeNIe for my SciCasting. For starters,
+the models make it easier to break apart the separate components of my
+belief. I can also tweak nodes and have the machine handle propagating
+the change, which will be much more accurate than fuzzily doing it in
+my head.</p>
+
+<p>Using some of the fancier(?) features should also allow me to
+focus my forecasting efforts and points on the questions where I can
+get the best returns. (Basically by answering the obvious question
+of “Am I sure enough to make it worth it?”)</p>
+
+<p>Finally, I’d like to put my models up like this, along with some
+explanation. That way I can demonstrate that I’m predicting the future
+on the basis of cunning and wit, not piles of luck. ☺</p>
+
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page2">Older</a>
+  
+  
+    <span class="pagination-item newer">Newer</span>
+  
+</div>
+
+    </div>
+
+  </body>
+</html>

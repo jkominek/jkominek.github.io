@@ -1,0 +1,11 @@
+#!/bin/bash -x
+rm -rf /tmp/hypercomplex.site
+mkdir /tmp/hypercomplex.site
+jekyll build -d /tmp/hypercomplex.site
+cd /tmp/hypercomplex.site
+git init
+git add .
+git commit -m '...'
+git remote add origin git@github.com:jkominek/jkominek.github.io
+git push -f origin master
+

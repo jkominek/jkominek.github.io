@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      The Last Line Effect and Extralinguistic Mechanisms &middot; hypercomplex
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>hypercomplex</h1>
+      <p class="lead">sure hope it looks harder than it was</p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-item">
+        <a href="/">Home</a>
+      </li>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/about/">About</a>
+            </li>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/prettygood/">Pretty Good</a>
+            </li>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        <a href="/atom.xml">atom</a>
+      </li>
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        jay kominek <code>kominek</code> <code>@</code> <code>gmail.com</code>
+      </li>
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        <a href="http://twitter.com/JayKominek">@JayKominek</a>, i guess
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">The Last Line Effect and Extralinguistic Mechanisms</h1>
+  <span class="post-date">24 April 2015</span>
+  <p>Since the release of the <a href="http://www.ccs.neu.edu/home/matthias/manifesto/">Racket
+Manifesto</a> by
+Felleisen, et al. it has become a thesis of mine that normal
+programmers face, on a regular basis, real problems which could be
+alleviated by the sorts of macro mechanisms offered by Racket (and to
+a lesser extent, other Lisps). I’ve got in mind some in-depth
+investigations I’d like to perform to really back this argument up,
+but until I have time for that, a recent article will serve as a
+sort of teaser for what I’ve got in mind.</p>
+
+<p>Andrey Karpov wrote in the “<a href="https://software.intel.com/en-us/blogs/2015/04/22/the-last-line-effect">The Last Line
+Effect</a>”:</p>
+
+<blockquote>
+  <p>When writing program code, programmers often have to write a series
+of similar constructs. Typing the same code several times is boring
+and inefficient. That’s why they use the Copy-Paste method: a code
+fragment is copied and pasted several times with further
+editing. Everyone knows what is bad about this method: you risk
+easily forgetting to change something in the pasted lines and thus
+giving birth to errors. <strong>Unfortunately, there is often no better
+alternative to be found.</strong></p>
+</blockquote>
+
+<blockquote>
+  <p>Now let’s speak of the pattern I discovered. I figured out that
+mistakes are most often made in the last pasted block of code.</p>
+</blockquote>
+
+<p>Andrey goes on to provide some evidence for his assertion. I think
+he’s on to something, and it makes sense. You do your pasting, then
+you set your hands in motion with some repeated delete delete delete
+type type type down arrow, repeat. By the time you’ve done that three
+or four times, your mind is numb, your eyes are glazed, and the
+muscles aren’t being supervised anymore.</p>
+
+<p>I’d like to point out and discuss two of his examples:</p>
+
+<h3 id="example-chromium">Example, Chromium</h3>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">if</span> <span class="p">(</span><span class="n">access</span> <span class="o">&amp;</span> <span class="n">FILE_WRITE_ATTRIBUTES</span><span class="p">)</span>
+  <span class="n">output</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">ASCIIToUTF16</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">FILE_WRITE_ATTRIBUTES</span><span class="se">\n</span><span class="s">"</span><span class="p">));</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">access</span> <span class="o">&amp;</span> <span class="n">FILE_WRITE_DATA</span><span class="p">)</span>
+  <span class="n">output</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">ASCIIToUTF16</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">FILE_WRITE_DATA</span><span class="se">\n</span><span class="s">"</span><span class="p">));</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">access</span> <span class="o">&amp;</span> <span class="n">FILE_WRITE_EA</span><span class="p">)</span>
+  <span class="n">output</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">ASCIIToUTF16</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">FILE_WRITE_EA</span><span class="se">\n</span><span class="s">"</span><span class="p">));</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">access</span> <span class="o">&amp;</span> <span class="n">FILE_WRITE_EA</span><span class="p">)</span>
+  <span class="n">output</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">ASCIIToUTF16</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">FILE_WRITE_EA</span><span class="se">\n</span><span class="s">"</span><span class="p">));</span>
+<span class="k">break</span><span class="p">;</span></code></pre></figure>
+
+<p>They’ve got some bitmasks that are referenced via variables (they’re
+probably <code class="highlighter-rouge">#define</code>s, but it doesn’t matter), and when the relevant
+bits are set, they’d like to write out the name of the bitmask that
+was set. Turns out this could actually be implemented as a function:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">check_and_append</span><span class="p">(</span><span class="n">access</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">access</span> <span class="o">&amp;</span> <span class="n">mask</span><span class="p">)</span>
+    <span class="n">output</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">ASCIIToUTF16</span><span class="p">(</span><span class="n">concat</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="p">...</span>
+<span class="n">check_and_append</span><span class="p">(</span><span class="n">access</span><span class="p">,</span> <span class="n">FILE_WRITE_ATTRIBUTES</span><span class="p">,</span>
+                 <span class="n">output</span><span class="p">,</span> <span class="s">"FILE_WRITE_ATTRIBUTES"</span><span class="p">);</span>
+<span class="p">...</span></code></pre></figure>
+
+<p>Hmm. Not really an improvement. We’re still duplicating things. And
+the repetition of <code class="highlighter-rouge">access</code> and <code class="highlighter-rouge">output</code> is tedious. I’d expect most
+programmers to copy and paste the function call. Back where we started.</p>
+
+<p>The C macro system happens to be powerful enough to address this case:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#define C_A(a,o,s) \
+  if (a &amp; s) \
+      o.append(ASCIIToUTF16("\t" #s "\n"));
+</span>
+<span class="n">C_A</span><span class="p">(</span><span class="n">access</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">FILE_WRITE_ATTRIBUTES</span><span class="p">)</span></code></pre></figure>
+
+<p>will expand to what we want.</p>
+
+<p>This accomplishes our goal, because the macro is able to see the symbol
+<code class="highlighter-rouge">FILE_WRITE_ATTRIBUTES</code>, rather than just the value of <code class="highlighter-rouge">0x00100</code> or whatever
+it might happen to be.</p>
+
+<p>We could shorten the uses of <code class="highlighter-rouge">C_A</code> by having the macro definition
+refer directly to <code class="highlighter-rouge">access</code> and <code class="highlighter-rouge">output</code>. But sooner or later, that
+will trip over standard <a href="http://en.wikipedia.org/wiki/Hygienic_macro">macro
+hygiene</a> problems.</p>
+
+<h3 id="example-multi-theft-auto">Example, Multi Theft Auto</h3>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">CWaterPoly</span><span class="o">*</span> <span class="n">CWaterManagerSA</span><span class="o">::</span><span class="n">CreateQuad</span> <span class="p">(....)</span>
+<span class="p">{</span>
+  <span class="p">....</span>
+  <span class="n">pInterface</span><span class="o">-&gt;</span><span class="n">m_wVertexIDs</span> <span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">=</span> <span class="n">pV1</span><span class="o">-&gt;</span><span class="n">GetID</span> <span class="p">();</span>
+  <span class="n">pInterface</span><span class="o">-&gt;</span><span class="n">m_wVertexIDs</span> <span class="p">[</span> <span class="mi">1</span> <span class="p">]</span> <span class="o">=</span> <span class="n">pV2</span><span class="o">-&gt;</span><span class="n">GetID</span> <span class="p">();</span>
+  <span class="n">pInterface</span><span class="o">-&gt;</span><span class="n">m_wVertexIDs</span> <span class="p">[</span> <span class="mi">2</span> <span class="p">]</span> <span class="o">=</span> <span class="n">pV3</span><span class="o">-&gt;</span><span class="n">GetID</span> <span class="p">();</span>
+  <span class="n">pInterface</span><span class="o">-&gt;</span><span class="n">m_wVertexIDs</span> <span class="p">[</span> <span class="mi">3</span> <span class="p">]</span> <span class="o">=</span> <span class="n">pV4</span><span class="o">-&gt;</span><span class="n">GetID</span> <span class="p">();</span>
+  <span class="p">....</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Ok, again, a C macro could help:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#define setter(i) \
+  {pInterface-&gt;m_wVertexIDs [ (i-1) ] = (pV ## i)-&gt;GetID ();}
+</span>   <span class="p">....</span>
+   <span class="n">setter</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+   <span class="n">setter</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+   <span class="n">setter</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+   <span class="n">setter</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+   <span class="p">....</span></code></pre></figure>
+
+<p>But, come on, this begs to be in a <code class="highlighter-rouge">for</code> loop:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#define setter(i) \
+  {pInterface-&gt;m_wVertexIDs [ (i-1) ] = (pV ## i)-&gt;GetID ();}
+</span>   <span class="p">....</span>
+   <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="mi">4</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">setter</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+   <span class="p">}</span>
+   <span class="p">....</span></code></pre></figure>
+
+<p>And, unsurprisingly, that doesn’t work. Perhaps a more clever C
+preprocessor could notice that the <code class="highlighter-rouge">for</code> loop is static, and generate
+all of the appropriate code. Maybe there’s even some option I don’t
+remember floating around that would work with existing preprocessors.
+Frankly, I’m pleased I remember how to do the stringification and
+concatenation.</p>
+
+<p>We could write a Racket macro that covers this:</p>
+
+<figure class="highlight"><pre><code class="language-racket" data-lang="racket"><span class="p">(</span><span class="k">define-syntax</span> <span class="p">(</span><span class="nf">assign</span> <span class="nv">stx</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">trailing-digits</span> <span class="nv">expr</span><span class="p">)</span>
+    <span class="p">(</span><span class="nb">string-&gt;number</span>
+      <span class="p">(</span><span class="nb">regexp-replace*</span> <span class="o">#</span><span class="nv">px"^</span><span class="o">.</span><span class="nv">*?</span><span class="p">(</span><span class="nf">\\d+</span><span class="p">)</span><span class="nv">$"</span>
+                       <span class="p">(</span><span class="nb">symbol-&gt;string</span> <span class="p">(</span><span class="nf">syntax-&gt;datum</span> <span class="nv">expr</span><span class="p">))</span>
+                       <span class="s">"\\1"</span><span class="p">)))</span>
+  <span class="p">(</span><span class="k">syntax-case</span> <span class="nv">stx</span> <span class="p">()</span>
+    <span class="p">[(</span><span class="nf">_</span> <span class="nv">target</span> <span class="nv">source</span> <span class="o">...</span><span class="p">)</span>
+     <span class="p">(</span><span class="k">with-syntax</span> <span class="p">([(</span><span class="nf">i</span> <span class="o">...</span><span class="p">)</span>
+                    <span class="p">(</span><span class="nb">map</span> <span class="nv">trailing-digits</span>
+		         <span class="p">(</span><span class="nb">syntax-&gt;list</span> <span class="o">#'</span><span class="p">(</span><span class="nf">source</span> <span class="o">...</span><span class="p">)))])</span>
+       <span class="o">#'</span><span class="p">(</span><span class="k">begin</span>
+           <span class="p">(</span><span class="nb">vector-set!</span> <span class="nv">target</span> <span class="p">(</span><span class="nb">sub1</span> <span class="nv">i</span><span class="p">)</span> <span class="nv">source</span><span class="p">)</span>
+           <span class="o">...</span><span class="p">))]))</span></code></pre></figure>
+
+<p>That’s not short. But if you’re going to be writing a lot of code
+where you want to pull values out of variables with numbers in their
+names, and stuff those values into corresponding positions in arrays,
+wouldn’t it be nice to have? How many times would you need to use it
+before it became worth the effort, in order to avoid the copying and
+pasting?</p>
+
+<p>How much effort would it be worth to eliminate a class of errors?</p>
+
+<h3 id="finally">Finally</h3>
+
+<p>Refer back to the bold portion of Andrey’s text: “<strong>there is often
+no better alternative to be found</strong>”. What? We’re programming! We’re
+providing instructions to a machine, which will be faithfully executed
+on our behalf, regardless of how tedious and repetitive they may be,
+and there’s <strong>no better alternative</strong> than copying and pasting?</p>
+
+<p>When the Racket manifesto discusses Racket’s design principles, the
+authors write:</p>
+
+<blockquote>
+  <p>When programmers must resort to extra-linguistic mechanisms to solve
+a problem, <strong>the chosen language has failed them</strong>.</p>
+</blockquote>
+
+<p>I assert that copying and pasting code is an extra-linguistic
+mechanism for expressing repetition the language is incapable of. When
+you are left with no choice but to copy and paste code, your language
+has failed you.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/08/17/musical-interlude-1/">
+            Musical Interlude 1
+            <small>17 Aug 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/08/02/lmsr-interactive/">
+            LMSR Made Interactive
+            <small>02 Aug 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/11/scicasting/">
+            GitHub repository for my forecasting code
+            <small>11 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

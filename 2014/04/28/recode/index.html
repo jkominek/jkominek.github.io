@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      How to ReCode &middot; hypercomplex
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>hypercomplex</h1>
+      <p class="lead">sure hope it looks harder than it was</p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-item">
+        <a href="/">Home</a>
+      </li>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/about/">About</a>
+            </li>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/prettygood/">Pretty Good</a>
+            </li>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        <a href="/atom.xml">atom</a>
+      </li>
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        jay kominek <code>kominek</code> <code>@</code> <code>gmail.com</code>
+      </li>
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        <a href="http://twitter.com/JayKominek">@JayKominek</a>, i guess
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">How to ReCode</h1>
+  <span class="post-date">28 April 2014</span>
+  <p><div style="float: right"><img src="/assets/2014/04/recode-photocopy.png" width="200" /></div> The <a href="http://recodeproject.com">ReCode Project</a> popped up in 2012,
+with the neat goal of taking old computer art, and writing new
+programs (in <a href="http://processing.org/">processing</a>) that
+regenerate the art, or close approximations.  This is made tricky
+enough by the lack of source code, and little to no description of the
+algorithm(s) used.</p>
+
+<p>To make it slightly more challenging, the original material looks
+like it was run through a cheap photocopier a couple of times. Weee.</p>
+
+<p>I came across a link to the project... hm, who knows. Probably some
+awful site with lots of comments. I hadn't done any work with
+processing at that point. Obviously the thing to do was
+participate.</p>
+
+<p>I think the art on there can be placed along a sort of "pain in the ass"
+gradient, from most to least:
+<ul>
+<li> The art uses some preexisting bitmapped artwork. Like <a href="http://recodeproject.com/artwork/v1n3gente">a picture of some
+guy</a>. Without the picture, it'll be hard to duplicate. One of them
+<a href="http://recodeproject.com/artwork/v1n2universal-declaration-of-human-rights">clearly
+uses a different photo</a>. I'm far too particular to do that.
+</li>
+
+<li>
+One step up, the art uses some nonobvious data. <a href="http://recodeproject.com/artwork/v1n2detail-from-tapestry">Or maybe it was just random</a>. There
+<a href="http://en.wikipedia.org/wiki/Ciphertext_indistinguishability#Indistinguishable_from_random_noise">isn't much difference</a>. So
+you could generate a bunch of random things which are all in the same style,
+but never exactly the same thing. If I wanted to do that, <a href="http://www.contextfreeart.org/gallery/search.php?by=kominek">I'd be playing</a> with <a href="http://www.contextfreeart.org/">context free</a>.
+</li>
+
+<li>
+Further along that path, the art uses obvious data. Such as <a href="http://recodeproject.com/static/img/cards/v2n1/03.png">US population density</a>.
+That's actually kind of tempting.
+</li>
+
+<li>
+Finally, we reach the nice "easy" pieces, which are almost purely
+geometric.  Like Sture Johannesson's "<a href="http://recodeproject.com/artwork/v1n2topographic-form">Topographic Form</a>", which
+ended up being the piece I chose to work on.
+</li>
+</ul>
+</p>
+
+<p><div style="float: left"><img style="margin-right: 1rem;" src="/assets/2014/04/recode-topographic.png" width="200" /></div>
+That's just an excerpt, the original doesn't have the nice square
+aspect ratio. If you decide to snarf the PDF so you can see the
+original, head's up: it is 20.2MiB.</p>
+
+<p>I looked at it for awhile, screwed around some, probably did a little
+bit of whatever I was supposed to be doing. Stuff 'n things.</p>
+
+<p class="message">
+the process
+</p>
+<p>When I look at that I see a circle, with 270° arcs on either side
+of it. Hm, nope, I see three arcs. 270°, 360°, 270°. That's easier
+to deal with.</p>
+
+<center><img src="/assets/2014/04/recode-topographic-arcs.svg" /></center>
+
+<p>Then a half-circle has been extruded along the lengths of
+the arcs, producing a 3D volume. We could stop there, and feed that
+into a ray tracer, and have a nice "realistic" looking image.</p>
+
+<center><img src="/assets/2014/04/recode-topographic-povray.png" /></center>
+
+<p>Yeah, about like that! Who doesn't like some nice perfectly smooth
+jade floating above an infinite checkboard? If you'd like to enjoy
+some 90's <a href="http://povray.org/">POV-Ray</a> flashbacks, you can <a href="/assets/2014/04/recode-topographic-povray.pov">play with the
+source</a> for that image, too.</p>
+
+<p>
+<div style="float: right">
+<img src="/assets/2014/04/recode-topographic-nohidden.png" />
+</div>
+We've got some nice geometry now, but the general appearance isn't
+even close. Ray tracing clearly wasn't used. In fact, if you look at
+the inside of circle, near the bottom, I think it is clear that no
+hidden surface removal was performed. My assumption, and what
+I went with in my version, is that it is just made up
+of some lines being drawn in 3D space. The renderer doesn't have
+any idea that it is depicting solid surfaces.
+</p>
+
+<p>At this point, you might want to <a href="http://recodeproject.com/translation/jay-kominek-topographic-form-direct-topographic-form-sture-johannesson">reference
+my code</a>. I started with the <code>RaisedArc</code> class, which
+represents the arc segments, and computes their height. Just some
+trig going on there. Take a point, figure out how high that arc is
+at that point.</p>
+
+<p>The <code>draw</code> function can then just drag a "pen" across
+the X-Y plane, stopping along the way and asking each arc how high it
+is.  Take the max, and you reconstruct the surface of the object we
+rendered:</p>
+
+<center><img src="/assets/2014/04/recode-topographic-toonice.png" /></center>
+
+<p>
+When I hit that, I felt that my decisions up to this point were
+justified. This felt like the same image, and maybe it is even what
+the original artist would've wanted to make if they'd had anything
+close to <a href="http://en.wikipedia.org/wiki/Enhanced_Graphics_Adapter">EGA</a>
+resolution available. But they didn't. So this image is too "nice",
+and certainly too smooth. Of particular concern, the truncated ends
+of the left and right arcs don't even look right anymore. In the original,
+they actually hint at a bit of perspective, even though I believe the
+image was rendered orthographically.
+</p>
+
+<p>"Fixing" the smoothness is taken care of in two steps. First,
+we up the step size (<code>fx_step</code>) until the lines are
+made of distinct segments. Then <code>noSmooth()</code> turns off
+processing's attempts to help us out and make the lines look nicer.
+Conveniently, increasing the step sizes makes the truncation of the
+arcs much rougher, and gives us the pseudo-perspective appearance.
+That's handy because 1) now I don't have to do anything else and 2)
+it acts (in my mind) as further evidence that the original was drawn
+orthographically instead of in perspective.</p>
+
+<center><img src="/assets/2014/04/recode-topographic-final.png" /></center>
+
+<p>I counted the number of horizontal lines in the original, and sort
+of eyeballed the other proportions. The <code>fy-0.5</code> in the
+call to <code>computeHeight</code> is to scoot the geometry around
+until the lines appear to be falling across it as they do in the original.</p>
+
+<p>The stroke width, and tilt of the X-Y plane were both determined by
+just fiddling around with things. ...I just noticed that the angle I concocted,
+of 28.12° is 0.4907 radians. I'm guessing that means the original used
+a round 0.5 radians. Maybe I'll change that some time. Ehh.</p>
+
+<p class="message">
+next?
+</p>
+
+<p>The same "rendering engine" used for this piece could actually be applied
+to the map of the United States referenced above. Clip off stuff outside the
+borders, and replaced <code>RaisedArc</code> with something that reads a data
+file, and bam. That could be fun.</p>
+
+<p>I'm also tempted to do Roger Coqart's <a href="http://recodeproject.com/artwork/v3n2from-the-square-series">From
+the Square Series</a>. It isn't clear to me that there is a pattern in
+how the lines are placed, but I think we could get fairly close with some
+rules about the distribution of line segments. Perhaps adding them at random
+until they get close to satisfying some rules.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/04/24/last-line/">
+            The Last Line Effect and Extralinguistic Mechanisms
+            <small>24 Apr 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/08/17/musical-interlude-1/">
+            Musical Interlude 1
+            <small>17 Aug 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/08/02/lmsr-interactive/">
+            LMSR Made Interactive
+            <small>02 Aug 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

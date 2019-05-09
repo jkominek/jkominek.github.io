@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Stockfighter Stuff &middot; hypercomplex
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>hypercomplex</h1>
+      <p class="lead">sure hope it looks harder than it was</p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-item">
+        <a href="/">Home</a>
+      </li>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/about/">About</a>
+            </li>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/prettygood/">Pretty Good</a>
+            </li>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        <a href="/atom.xml">atom</a>
+      </li>
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        jay kominek <code>kominek</code> <code>@</code> <code>gmail.com</code>
+      </li>
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        <a href="http://twitter.com/JayKominek">@JayKominek</a>, i guess
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+    <div class="content container">
+      This is stuff for the stockfighter peeps.
+
+<h2>Chapter 1</h2>
+
+Code:
+<ul>
+  <li><a href="/assets/code/api.py">api.py</a></li>
+  <li><a href="/assets/code/amends.py">amends.py</a></li>
+  <li><a href="/assets/code/analyzefills.py">analyzefills.py</a></li>
+</ul>
+
+<p>Reading the level description, I figured that the level would involve
+normalish trading, then a sudden shift of some sort, followed by more
+normal trading. The inside trader would be the guy who profited the most
+by the sudden shift. To figure that out, I needed to know at least roughly
+how much everybody profited.</p>
+
+<p>When I initially read the API docs, the lack of real authentication on the
+executions websocket stuck out like the sore thumb. So I went back looking
+for a way to find account numbers. I found the error message on order
+cancellation, and worked with that. Most of <code>amends.py</code> is
+concerned with figuring out what order IDs exist, trying to cancel
+every single one of them to check for new account numbers, and then starting
+websockets to watch for that account's executions.</p>
+
+<p>The remaining bit of intelligence produces occasional summaries, and
+dumps all of the execution information to a file.</p>
+
+<p><code>analyzefills.py</code> takes those dumps, and does more involved
+analysis, offline, including making some files for gnuplot. What I found
+was:
+
+<ul>
+  <li>No sudden shift seemed to occur.</li>
+  <li>There were about 3 traders selling lots of stock. They didn't look to be making any money, so I wrote them off.</li>
+  <li>A whole bunch of traders that make a market orders occasionally. It seemed unlikely the inside trader could be getting rich off of super low volume market orders. Wrote them off.</li>
+  <li>What was left was a bunch of traders that were all trading about the same amount, and maybe making money. So I watched them.</li>
+</ul>
+</p>
+
+<p>And, honestly, before I got too far with that, I noticed there was always
+one of them that placed about half as many orders as the rest. Since you've
+implemented these traders as programs, different behavior suggests a different
+program. One unique program out of a big pile sounded like the inside
+trader, so I accused it. That worked.</p>
+
+<p>Ran the thing again, found the same trader trading half as fast as the rest,
+and accused it again with the link to this page. And I was right again.</p>
+
+<p>So, bam. All done.</p>
+
+<p>Stockfighter reminded me of trading
+on <a href="http://scicast.org/">SciCast</a>, which I really enjoyed
+(and wrote <a href="http://hypercomplex.net/">some blog posts about
+it</a>).  I think at the end I was in second place on it, and I was
+using an
+<a href="http://github.com/jkominek/forecasting">automated trading program</a>
+that I wrote for it. Stockfighter brought back some good memories. :)
+Thanks for that.
+</p>
+
+    </div>
+
+  </body>
+</html>

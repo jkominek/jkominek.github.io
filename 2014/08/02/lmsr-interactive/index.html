@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      LMSR Made Interactive &middot; hypercomplex
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>hypercomplex</h1>
+      <p class="lead">sure hope it looks harder than it was</p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-item">
+        <a href="/">Home</a>
+      </li>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/about/">About</a>
+            </li>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/prettygood/">Pretty Good</a>
+            </li>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        <a href="/atom.xml">atom</a>
+      </li>
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        jay kominek <code>kominek</code> <code>@</code> <code>gmail.com</code>
+      </li>
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        <a href="http://twitter.com/JayKominek">@JayKominek</a>, i guess
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">LMSR Made Interactive</h1>
+  <span class="post-date">02 August 2014</span>
+  <p>The <a href="http://hanson.gmu.edu/mktscore.pdf">Logarithmic Market Scoring
+Rule</a> (LMSR) is the rule which
+governs the price of trades on
+<a href="http://www.scicast.org/">SciCast</a>. SciCast’s predecessor, DAGGRE,
+produced a <a href="http://blog.daggre.org/2012/07/11/daggre-scoring-tutorial/">tutorial video on the
+LMSR</a>.</p>
+
+<p>I thought it might help if people could play with the LMSR directly,
+to get a feel for how it behaves. I looked around at my options for
+making interactive mathematical plots, and decided that the best option
+for the amount of time I was willing to put in was Mathematica CDF
+files. You’ll need the
+<a href="http://www.wolfram.com/cdf-player/">CDF player</a> installed.</p>
+
+<script type="text/javascript" src="http://www.wolfram.com/cdf-player/plugin/v2.1/cdfplugin.js"></script>
+
+<script type="text/javascript">
+var cdf = new cdfplugin();
+cdf.setDefaultContent('<a href="http://www.wolfram.com/cdf-player/"><img src="/assets/2014/08/LMSR-only.png"></a>');
+cdf.embed('/assets/2014/08/LMSR-only.cdf', 716, 485);
+</script>
+
+<p>You should have two sliders, “start” and “tradeto”, as well as a graph
+with two curves on it, one red, the other green. If not, something has
+gone awry. Sorry.</p>
+
+<p>The value of “start” represents where the trade is starting from; the
+current state of the market. “tradeto” is the value of the trade you’re
+considering making (this assumes power mode). “start” and “tradeto” are
+depicted visually on the graph by vertical lines labelled “S” and “T”.
+“start” controls a second line, labelled ▽.</p>
+
+<p>Where T intersects with the Yes (green) and No (red) lines, there is a
+number which is the points you’ll gain (positive) or lose (negative),
+if the question resolves as Yes, or No, respectively. Between the S
+and ▽ lines, any trade you make has the potential to earn more than it
+risks.  Everywhere between those lines has <a href="http://en.wikipedia.org/wiki/Fixed-odds_betting">decimal
+odds</a> of ≥2.0.</p>
+
+<p>I have a number of other interactive graphs I’m planning to put up,
+but I’m still tweaking them. If you’ve got access to Mathematica, and
+you’d care to root around in my <a href="http://github.com/jkominek/scicasting/">scicasting
+repo</a> you can find my
+more-or-less in progress Mathematica notebook where I’m developing
+them.</p>
+
+<p>On a programming note, these graphs are the most complicated things
+I’ve ever bothered to do in Mathematica. I’m pleased to discover that
+a lot of the horrifying looking Mathematica code I’ve seen on their
+blog, and elsewhere on the Internet over the years, was much worse
+than it had to be. Apparently nobody believes in adding whitespace to
+format things nicely. On the downside, it still hurts to read.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/04/24/last-line/">
+            The Last Line Effect and Extralinguistic Mechanisms
+            <small>24 Apr 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/08/17/musical-interlude-1/">
+            Musical Interlude 1
+            <small>17 Aug 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/06/11/scicasting/">
+            GitHub repository for my forecasting code
+            <small>11 Jun 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,762 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>hypercomplex</title>
+ <link href="http://hypercomplex.net//atom.xml" rel="self"/>
+ <link href="http://hypercomplex.net//"/>
+ <updated>2019-05-09T15:48:42-06:00</updated>
+ <id>http://hypercomplex.net/</id>
+ <author>
+   <name>jay kominek</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>The Last Line Effect and Extralinguistic Mechanisms</title>
+   <link href="http://hypercomplex.net//2015/04/24/last-line/"/>
+   <updated>2015-04-24T00:00:00-06:00</updated>
+   <id>http://hypercomplex.net//2015/04/24/last-line</id>
+   <content type="html">&lt;p&gt;Since the release of the &lt;a href=&quot;http://www.ccs.neu.edu/home/matthias/manifesto/&quot;&gt;Racket
+Manifesto&lt;/a&gt; by
+Felleisen, et al. it has become a thesis of mine that normal
+programmers face, on a regular basis, real problems which could be
+alleviated by the sorts of macro mechanisms offered by Racket (and to
+a lesser extent, other Lisps). I’ve got in mind some in-depth
+investigations I’d like to perform to really back this argument up,
+but until I have time for that, a recent article will serve as a
+sort of teaser for what I’ve got in mind.&lt;/p&gt;
+
+&lt;p&gt;Andrey Karpov wrote in the “&lt;a href=&quot;https://software.intel.com/en-us/blogs/2015/04/22/the-last-line-effect&quot;&gt;The Last Line
+Effect&lt;/a&gt;”:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;When writing program code, programmers often have to write a series
+of similar constructs. Typing the same code several times is boring
+and inefficient. That’s why they use the Copy-Paste method: a code
+fragment is copied and pasted several times with further
+editing. Everyone knows what is bad about this method: you risk
+easily forgetting to change something in the pasted lines and thus
+giving birth to errors. &lt;strong&gt;Unfortunately, there is often no better
+alternative to be found.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Now let’s speak of the pattern I discovered. I figured out that
+mistakes are most often made in the last pasted block of code.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Andrey goes on to provide some evidence for his assertion. I think
+he’s on to something, and it makes sense. You do your pasting, then
+you set your hands in motion with some repeated delete delete delete
+type type type down arrow, repeat. By the time you’ve done that three
+or four times, your mind is numb, your eyes are glazed, and the
+muscles aren’t being supervised anymore.&lt;/p&gt;
+
+&lt;p&gt;I’d like to point out and discuss two of his examples:&lt;/p&gt;
+
+&lt;h3 id=&quot;example-chromium&quot;&gt;Example, Chromium&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;access&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FILE_WRITE_ATTRIBUTES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ASCIIToUTF16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;FILE_WRITE_ATTRIBUTES&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;access&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FILE_WRITE_DATA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ASCIIToUTF16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;FILE_WRITE_DATA&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;access&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FILE_WRITE_EA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ASCIIToUTF16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;FILE_WRITE_EA&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;access&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FILE_WRITE_EA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ASCIIToUTF16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;FILE_WRITE_EA&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;They’ve got some bitmasks that are referenced via variables (they’re
+probably &lt;code class=&quot;highlighter-rouge&quot;&gt;#define&lt;/code&gt;s, but it doesn’t matter), and when the relevant
+bits are set, they’d like to write out the name of the bitmask that
+was set. Turns out this could actually be implemented as a function:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;check_and_append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;access&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;access&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ASCIIToUTF16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;concat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)));&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;check_and_append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;access&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FILE_WRITE_ATTRIBUTES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                 &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;FILE_WRITE_ATTRIBUTES&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Hmm. Not really an improvement. We’re still duplicating things. And
+the repetition of &lt;code class=&quot;highlighter-rouge&quot;&gt;access&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;output&lt;/code&gt; is tedious. I’d expect most
+programmers to copy and paste the function call. Back where we started.&lt;/p&gt;
+
+&lt;p&gt;The C macro system happens to be powerful enough to address this case:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#define C_A(a,o,s) \
+  if (a &amp;amp; s) \
+      o.append(ASCIIToUTF16(&quot;\t&quot; #s &quot;\n&quot;));
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;C_A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;access&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FILE_WRITE_ATTRIBUTES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;will expand to what we want.&lt;/p&gt;
+
+&lt;p&gt;This accomplishes our goal, because the macro is able to see the symbol
+&lt;code class=&quot;highlighter-rouge&quot;&gt;FILE_WRITE_ATTRIBUTES&lt;/code&gt;, rather than just the value of &lt;code class=&quot;highlighter-rouge&quot;&gt;0x00100&lt;/code&gt; or whatever
+it might happen to be.&lt;/p&gt;
+
+&lt;p&gt;We could shorten the uses of &lt;code class=&quot;highlighter-rouge&quot;&gt;C_A&lt;/code&gt; by having the macro definition
+refer directly to &lt;code class=&quot;highlighter-rouge&quot;&gt;access&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;output&lt;/code&gt;. But sooner or later, that
+will trip over standard &lt;a href=&quot;http://en.wikipedia.org/wiki/Hygienic_macro&quot;&gt;macro
+hygiene&lt;/a&gt; problems.&lt;/p&gt;
+
+&lt;h3 id=&quot;example-multi-theft-auto&quot;&gt;Example, Multi Theft Auto&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;n&quot;&gt;CWaterPoly&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CWaterManagerSA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CreateQuad&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(....)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;....&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;pInterface&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m_wVertexIDs&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pV1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetID&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;pInterface&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m_wVertexIDs&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pV2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetID&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;pInterface&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m_wVertexIDs&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pV3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetID&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;pInterface&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m_wVertexIDs&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pV4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetID&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;....&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Ok, again, a C macro could help:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#define setter(i) \
+  {pInterface-&amp;gt;m_wVertexIDs [ (i-1) ] = (pV ## i)-&amp;gt;GetID ();}
+&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;....&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;setter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;setter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;setter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;setter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;....&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;But, come on, this begs to be in a &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt; loop:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#define setter(i) \
+  {pInterface-&amp;gt;m_wVertexIDs [ (i-1) ] = (pV ## i)-&amp;gt;GetID ();}
+&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;....&lt;/span&gt;
+   &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+     &lt;span class=&quot;n&quot;&gt;setter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;....&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;And, unsurprisingly, that doesn’t work. Perhaps a more clever C
+preprocessor could notice that the &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt; loop is static, and generate
+all of the appropriate code. Maybe there’s even some option I don’t
+remember floating around that would work with existing preprocessors.
+Frankly, I’m pleased I remember how to do the stringification and
+concatenation.&lt;/p&gt;
+
+&lt;p&gt;We could write a Racket macro that covers this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-racket&quot; data-lang=&quot;racket&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define-syntax&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;assign&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;stx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;trailing-digits&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;expr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;string-&amp;gt;number&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;regexp-replace*&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;px&quot;^&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;*?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;\\d+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$&quot;&lt;/span&gt;
+                       &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;symbol-&amp;gt;string&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;syntax-&amp;gt;datum&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;expr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+                       &lt;span class=&quot;s&quot;&gt;&quot;\\1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;syntax-case&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;stx&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;target&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;with-syntax&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;([(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;trailing-digits&lt;/span&gt;
+		         &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;syntax-&amp;gt;list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;#&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))])&lt;/span&gt;
+       &lt;span class=&quot;o&quot;&gt;#&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+           &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;vector-set!&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;target&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sub1&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+           &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))]))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;That’s not short. But if you’re going to be writing a lot of code
+where you want to pull values out of variables with numbers in their
+names, and stuff those values into corresponding positions in arrays,
+wouldn’t it be nice to have? How many times would you need to use it
+before it became worth the effort, in order to avoid the copying and
+pasting?&lt;/p&gt;
+
+&lt;p&gt;How much effort would it be worth to eliminate a class of errors?&lt;/p&gt;
+
+&lt;h3 id=&quot;finally&quot;&gt;Finally&lt;/h3&gt;
+
+&lt;p&gt;Refer back to the bold portion of Andrey’s text: “&lt;strong&gt;there is often
+no better alternative to be found&lt;/strong&gt;”. What? We’re programming! We’re
+providing instructions to a machine, which will be faithfully executed
+on our behalf, regardless of how tedious and repetitive they may be,
+and there’s &lt;strong&gt;no better alternative&lt;/strong&gt; than copying and pasting?&lt;/p&gt;
+
+&lt;p&gt;When the Racket manifesto discusses Racket’s design principles, the
+authors write:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;When programmers must resort to extra-linguistic mechanisms to solve
+a problem, &lt;strong&gt;the chosen language has failed them&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I assert that copying and pasting code is an extra-linguistic
+mechanism for expressing repetition the language is incapable of. When
+you are left with no choice but to copy and paste code, your language
+has failed you.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Musical Interlude 1</title>
+   <link href="http://hypercomplex.net//2014/08/17/musical-interlude-1/"/>
+   <updated>2014-08-17T00:00:00-06:00</updated>
+   <id>http://hypercomplex.net//2014/08/17/musical-interlude-1</id>
+   <content type="html">&lt;iframe width=&quot;100%&quot; height=&quot;166&quot; scrolling=&quot;no&quot; frameborder=&quot;no&quot; src=&quot;https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/163611134&amp;amp;color=ff5500&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;show_comments=true&amp;amp;show_user=true&amp;amp;show_reposts=false&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Sorry about all the fancy embedded things.&lt;/p&gt;
+
+&lt;p&gt;More SciCast-related CDF’s coming soon.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>LMSR Made Interactive</title>
+   <link href="http://hypercomplex.net//2014/08/02/lmsr-interactive/"/>
+   <updated>2014-08-02T00:00:00-06:00</updated>
+   <id>http://hypercomplex.net//2014/08/02/lmsr-interactive</id>
+   <content type="html">&lt;p&gt;The &lt;a href=&quot;http://hanson.gmu.edu/mktscore.pdf&quot;&gt;Logarithmic Market Scoring
+Rule&lt;/a&gt; (LMSR) is the rule which
+governs the price of trades on
+&lt;a href=&quot;http://www.scicast.org/&quot;&gt;SciCast&lt;/a&gt;. SciCast’s predecessor, DAGGRE,
+produced a &lt;a href=&quot;http://blog.daggre.org/2012/07/11/daggre-scoring-tutorial/&quot;&gt;tutorial video on the
+LMSR&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I thought it might help if people could play with the LMSR directly,
+to get a feel for how it behaves. I looked around at my options for
+making interactive mathematical plots, and decided that the best option
+for the amount of time I was willing to put in was Mathematica CDF
+files. You’ll need the
+&lt;a href=&quot;http://www.wolfram.com/cdf-player/&quot;&gt;CDF player&lt;/a&gt; installed.&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://www.wolfram.com/cdf-player/plugin/v2.1/cdfplugin.js&quot;&gt;&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+var cdf = new cdfplugin();
+cdf.setDefaultContent(&#39;&lt;a href=&quot;http://www.wolfram.com/cdf-player/&quot;&gt;&lt;img src=&quot;/assets/2014/08/LMSR-only.png&quot;&gt;&lt;/a&gt;&#39;);
+cdf.embed(&#39;/assets/2014/08/LMSR-only.cdf&#39;, 716, 485);
+&lt;/script&gt;
+
+&lt;p&gt;You should have two sliders, “start” and “tradeto”, as well as a graph
+with two curves on it, one red, the other green. If not, something has
+gone awry. Sorry.&lt;/p&gt;
+
+&lt;p&gt;The value of “start” represents where the trade is starting from; the
+current state of the market. “tradeto” is the value of the trade you’re
+considering making (this assumes power mode). “start” and “tradeto” are
+depicted visually on the graph by vertical lines labelled “S” and “T”.
+“start” controls a second line, labelled ▽.&lt;/p&gt;
+
+&lt;p&gt;Where T intersects with the Yes (green) and No (red) lines, there is a
+number which is the points you’ll gain (positive) or lose (negative),
+if the question resolves as Yes, or No, respectively. Between the S
+and ▽ lines, any trade you make has the potential to earn more than it
+risks.  Everywhere between those lines has &lt;a href=&quot;http://en.wikipedia.org/wiki/Fixed-odds_betting&quot;&gt;decimal
+odds&lt;/a&gt; of ≥2.0.&lt;/p&gt;
+
+&lt;p&gt;I have a number of other interactive graphs I’m planning to put up,
+but I’m still tweaking them. If you’ve got access to Mathematica, and
+you’d care to root around in my &lt;a href=&quot;http://github.com/jkominek/scicasting/&quot;&gt;scicasting
+repo&lt;/a&gt; you can find my
+more-or-less in progress Mathematica notebook where I’m developing
+them.&lt;/p&gt;
+
+&lt;p&gt;On a programming note, these graphs are the most complicated things
+I’ve ever bothered to do in Mathematica. I’m pleased to discover that
+a lot of the horrifying looking Mathematica code I’ve seen on their
+blog, and elsewhere on the Internet over the years, was much worse
+than it had to be. Apparently nobody believes in adding whitespace to
+format things nicely. On the downside, it still hurts to read.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>GitHub repository for my forecasting code</title>
+   <link href="http://hypercomplex.net//2014/06/11/scicasting/"/>
+   <updated>2014-06-11T00:00:00-06:00</updated>
+   <id>http://hypercomplex.net//2014/06/11/scicasting</id>
+   <content type="html">&lt;p&gt;I’ve put up a &lt;a href=&quot;https://github.com/jkominek/scicasting/&quot;&gt;GitHub repository&lt;/a&gt;
+of the code I’ve used to aid my forecasting.&lt;/p&gt;
+
+&lt;p&gt;Right now I’ve just got the &lt;a href=&quot;http://hypercomplex.net/2014/06/08/scicast-bluefin-genie/&quot;&gt;previously discussed Bluefin-21
+model&lt;/a&gt;, a
+model for the &lt;a href=&quot;https://scicast.org/#!/questions/653/safe&quot;&gt;“Will NASA land a telepresence robot on Venus by
+2020?”&lt;/a&gt; question, and some
+code that pulls down citation information from Google Scholar and
+crunches it for &lt;a href=&quot;https://scicast.org/#!/questions/462/safe&quot;&gt;“Will there be at least one female winner of a Fields
+Medal in 2014?”&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p class=&quot;message&quot;&gt;
+venus launch windows
+&lt;/p&gt;
+
+&lt;p&gt;My Venus model presupposes there are three launch windows (2015, 2016
+and 2018) for Venus. I also mention that in my comment on SciCast,
+though I don’t mention how I determined that.&lt;/p&gt;
+
+&lt;p&gt;I’m going to assume you have a reasonable mental model of planets, and
+their orbits around the Sun. Further, you believe that with current
+propulsion techniques, there are better and worse times to launch when
+you want to get to another planet.&lt;/p&gt;
+
+&lt;p&gt;Ok, first step, you hit up &lt;a href=&quot;http://ssd.jpl.nasa.gov/horizons.cgi&quot;&gt;JPL’s
+HORIZONS&lt;/a&gt; web site. Set your
+Target Body to Venus (it’ll be 299; that’s the &lt;a href=&quot;http://naif.jpl.nasa.gov/naif/toolkit.html&quot;&gt;NAIF
+SPICE&lt;/a&gt; ID for Venus), the
+Time Span to run from 2014-7-1 to 2020-1-1 with a step size of 1
+calendar month. Pull up the table settings and turn off everything
+except #20 Observer range &amp;amp; range-rate. Hit Generate Ephemeris. Bam,
+you’ve got a table of how far apart Venus and the Earth are, on a
+monthly basis, for the chunk of time under consideration in the
+question.&lt;/p&gt;
+
+&lt;p&gt;You could plot it, and you’d get something looking suspiciously
+like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/2014/06/venus.png&quot; alt=&quot;Earth-Venus Distance 2014-06 to 2020-01&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Hey look, three dips, almost in the three years I mention. Those
+correspond to the points when the planets are closest, and are roughly
+the best time to try and get from the Earth to Venus. Since Venus zips
+around the Sun quite a bit faster than the Earth, every close approach
+is Venus “catching up” with us.&lt;/p&gt;
+
+&lt;p&gt;The best plan for launching, then, is to kick it out of orbit into the
+direction of Venus, and let Venus catch up to it. The transit then
+just takes a few months. You can work out a good time to launch by
+shaving a few months off each of the minimums on the graph. That’s why
+the 2017 dip corresponds to a (late) 2016 launch window.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>SciCast, Bluefin-21, and GeNIe</title>
+   <link href="http://hypercomplex.net//2014/06/08/scicast-bluefin-genie/"/>
+   <updated>2014-06-08T00:00:00-06:00</updated>
+   <id>http://hypercomplex.net//2014/06/08/scicast-bluefin-genie</id>
+   <content type="html">&lt;p&gt;I’m going to assume you’re familiar with
+&lt;a href=&quot;https://scicast.org/#!/about&quot;&gt;SciCast&lt;/a&gt;; if you aren’t, that link is the
+place to start. Or maybe &lt;a href=&quot;http://en.wikipedia.org/wiki/SciCast&quot;&gt;Wikipedia&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;There has been a open question on SciCast, &lt;a href=&quot;https://scicast.org/#!/questions/464/safe&quot;&gt;“Will Bluefin-21 locate
+the black box from Malaysian Airlines flight
+MH-370?”&lt;/a&gt;, since mid-April.
+(If you don’t know what &lt;a href=&quot;http://en.wikipedia.org/wiki/MH370&quot;&gt;MH370&lt;/a&gt;
+is, I envy you.) It &lt;a href=&quot;https://scicast.org/#!/questions/464/trades/safe&quot;&gt;dropped fairly
+quickly&lt;/a&gt; to
+predicting that there was a 10% chance of Bluefin-21 locating MH370.
+Early on, that was reasonable enough. There was evidence pings from
+the black box had been detected in the region, so the entire Indian
+Ocean had been narrowed down to a relatively small area.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately weeks passed and on May 29th &lt;a href=&quot;http://www.bbc.com/news/world-asia-27615173&quot;&gt;Bluefin-21’s mission was
+completed&lt;/a&gt;,
+unsuccessfully. Bluefin-21 then stopped looking. At this point, I (and
+others) expected the forecast to plummet. But folks kept
+pushing it back up. In fact I count about 5 or 6 distinct individuals
+who moved the probability up after completion of the mission. There
+are perfectly good reasons related to the nature of the prediction
+market for some of those adjustments.&lt;/p&gt;
+
+&lt;p&gt;I’m interested in the bad reasons.&lt;/p&gt;
+
+&lt;p&gt;One of the bad reasons that could apply to any question, but seems to
+be a very likely candidate for this question, is being unaware of the
+state of the world. Forecasting the future when you don’t know the
+present just isn’t going to turn out very well. In the best case,
+you’ve got really good priors, and you’re stuck working off of
+those. Realistically, your priors aren’t that great. Evidence could
+help them out, but you’re not updating.&lt;/p&gt;
+
+&lt;p&gt;In the specific case of the Bluefin-21, it was suggested (by someone
+with whom I have no beef, and am not trying to single out!) that there
+was still a chance MH370 would be discovered by going back and
+reanalyzing the data.&lt;/p&gt;
+
+&lt;p&gt;This didn’t seem at all likely to me. I attempted to explain why,
+though in retrospect I think my explanation was poor, and incomplete.&lt;/p&gt;
+
+&lt;p&gt;To formalize my reasoning, I hunted around for a software tool that
+would let me crunch the numbers and make a diagram. I turned up
+&lt;a href=&quot;http://genie.sis.pitt.edu/&quot;&gt;GeNIe&lt;/a&gt;, which looked appropriate for the
+task. GeNIe is a GUI on top of SMILE, which is a software library for
+(&lt;em&gt;hand&lt;/em&gt; &lt;em&gt;wave&lt;/em&gt;) modeling &lt;a href=&quot;http://en.wikipedia.org/wiki/Bayesian_network&quot;&gt;Bayesian
+networks&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I ended up producing this model and looks like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/2014/06/bluefin-before-evidence.png&quot; alt=&quot;Before Evidence&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;(If you want to fiddle with the model, you can &lt;a href=&quot;/assets/2014/06/bluefin-model.xdsl&quot;&gt;download it
+here&lt;/a&gt;.)&lt;/p&gt;
+
+&lt;p&gt;This model assumes Bluefin-21 is 90% effective on the first pass, and
+reanalysis has a 20% chance to find MH370 if it was missed. It also
+assumes that reanalysis will almost certainly happen, but that there
+is only a 10% chance that MH370 is even in the search area. I feel
+that’s generous given the search area, and nature of the acoustic
+evidence. (I never thought the surface debris was likely to be
+related.  There’s a &lt;a href=&quot;http://en.wikipedia.org/wiki/Great_Pacific_garbage_patch&quot;&gt;lot of crap in the
+ocean&lt;/a&gt;. That
+they found so little is just evidence of the size of the ocean.)&lt;/p&gt;
+
+&lt;p&gt;Based on all of that, the model says there’s a 9% chance Bluefin-21 would
+find MH370. Which is about where the SciCast prediction was at. The
+other forecasters might’ve been giving the pings more credit. Anyways,
+we’re kind of in the ballpark. So let’s now tell the model that Bluefin-21
+didn’t find MH370 on the first pass, and see what it says:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/2014/06/bluefin-after-evidence.png&quot; alt=&quot;After Evidence&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Weee, the chance that Bluefin-21 will find anything has now dropped to
+basically zero. And that’s because not finding the MH370 on the first
+pass is evidence that it isn’t there, even if Bluefin-21 is
+imperfect. In fact, the better Bluefin-21 is, the stronger the
+evidence of absence. For any chance of detection to remain, Bluefin-21
+would have to be good at collecting data, but the analysis would have
+to be awful and error prone, unless you repeated it. I didn’t attempt
+to model that in, because it would be so weird.&lt;/p&gt;
+
+&lt;p&gt;First, sonar is well understood, and Bluefin-21 was using COTS units
+that basically produce a elevation model of the ocean floor. Second,
+if “trying harder” upped the odds of detection, then the operators
+would throw more CPU or man power at it until they’d raised the
+likelihood of detection as high as it was reasonably going to go. The
+cost of the search had hit at least $44 million before Bluefin-21 got
+wet; some additional data analysis isn’t going to put a dent in that.
+(Maybe you could find a signal processing researcher to apply some
+cutting edge stuff, but if that didn’t happen at the start of the
+search, I don’t think it’ll happen before the question expires.)&lt;/p&gt;
+
+&lt;p&gt;This question is pretty much over, but if you have suggestions for
+making the model better, I’d be interested in hearing them. This is
+the first thing I’ve done with this sort of modeling tool. So I’m
+sure some things could be done better.&lt;/p&gt;
+
+&lt;p class=&quot;message&quot;&gt;
+next?
+&lt;/p&gt;
+
+&lt;p&gt;I plan to make further use of GeNIe for my SciCasting. For starters,
+the models make it easier to break apart the separate components of my
+belief. I can also tweak nodes and have the machine handle propagating
+the change, which will be much more accurate than fuzzily doing it in
+my head.&lt;/p&gt;
+
+&lt;p&gt;Using some of the fancier(?) features should also allow me to
+focus my forecasting efforts and points on the questions where I can
+get the best returns. (Basically by answering the obvious question
+of “Am I sure enough to make it worth it?”)&lt;/p&gt;
+
+&lt;p&gt;Finally, I’d like to put my models up like this, along with some
+explanation. That way I can demonstrate that I’m predicting the future
+on the basis of cunning and wit, not piles of luck. ☺&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Deep Mirror</title>
+   <link href="http://hypercomplex.net//2014/05/05/deepmirror/"/>
+   <updated>2014-05-05T00:00:00-06:00</updated>
+   <id>http://hypercomplex.net//2014/05/05/deepmirror</id>
+   <content type="html">&lt;div style=&quot;float: right&quot;&gt;&lt;a href=&quot;https://github.com/jkominek/deepmirror/blob/d472b242cfda39e7a397ffd31b8079c45c3ab1b7/deep-bush.rkt&quot;&gt;&lt;img src=&quot;/assets/2014/05/deepmirror-deep-bush.png&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+
+&lt;p&gt;I threw together a
+&lt;a href=&quot;http://contextfreeart.org/mediawiki/index.php/Context_Free_Art:About&quot;&gt;CFDG&lt;/a&gt;
+inspired library for &lt;a href=&quot;http://www.racket-lang.org/&quot;&gt;Racket&lt;/a&gt;, which
+I named &lt;a href=&quot;https://github.com/jkominek/deepmirror&quot;&gt;Deep Mirror&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;CFDG popped up in maybe 2004? 2003? Somewhere back there. I played
+with it some initially, then played with it again when the guys at
+&lt;a href=&quot;http://contextfreeart.org/&quot;&gt;Context Free Art&lt;/a&gt; made a version with
+a nice GUI.&lt;/p&gt;
+
+&lt;p&gt;Short version is, you write a bunch of rules which behave as a generative
+context free grammar. Various terminals in the grammar result in image
+elements being created, and annotations on terminals (and nonterminals)
+result in the state of the drawing system being altered. If you want to
+make images out of recursive elements, this is a pretty good way to go.&lt;/p&gt;
+
+&lt;p&gt;I &lt;a href=&quot;http://contextfreeart.org/gallery/search.php?by=kominek&quot;&gt;made some
+pictures&lt;/a&gt;
+with it, but the version of the language out then didn’t allow you to
+write functions, or, as I recall, perform any arithmetic at all. People
+did some neat things, and made some attractive art, but I got bored.&lt;/p&gt;
+
+&lt;p class=&quot;message&quot;&gt;the new thing&lt;/p&gt;
+
+&lt;p&gt;For whatever reason, it popped back up in my mind this week, and I
+thought I’d try and stuff something like CFDGs into Racket, while
+leaving you the full power of Racket. I wonder what else I might’ve
+concocted if I’d had the entirety of the &lt;a href=&quot;http://docs.racket-lang.org/math/index.html?q=math&quot;&gt;math
+library&lt;/a&gt; available
+to me back then.&lt;/p&gt;
+
+&lt;p&gt;&lt;div style=&quot;float: right&quot;&gt;&lt;img src=&quot;/assets/2014/05/deepmirror-curly-pentagon.png&quot; /&gt;&lt;/div&gt; Look at
+that, it makes pictures. (code &lt;a href=&quot;https://github.com/jkominek/deepmirror/blob/d472b242cfda39e7a397ffd31b8079c45c3ab1b7/curly-pentagon.rkt&quot;&gt;here&lt;/a&gt;)
+And that picture right there is an example of why I made this, and why
+I&#39;m not quite done with it. See how the red tentacle thing is covered
+up by the purple? The recursion is being done depth-first and the red
+tentacle is completely drawn before the purple one starts.
+&lt;/p&gt;
+
+&lt;p&gt;I arranged my library to behave a bit differently from the other
+tools. Instead of applying arguments to the various rules/shapes, they
+just inherit whatever the current drawing state is, sort of like
+OpenGL.&lt;/p&gt;
+
+&lt;p&gt;You can only multiply new transformations
+(&lt;code&gt;x&lt;/code&gt;, &lt;code&gt;rotate&lt;/code&gt;, &lt;code&gt;sheary&lt;/code&gt;, etc) into
+the current transformation matrix; no forcing the rotation or
+translation to specific values. But the hue, saturation, brightness
+and alpha can all be set to a specific value (with &lt;code&gt;hue=&lt;/code&gt;,
+&lt;code&gt;brightness=&lt;/code&gt;, etc), or you can multiply the existing value
+by a new one (with &lt;code&gt;saturation&lt;/code&gt;, &lt;code&gt;alpha&lt;/code&gt;, etc).&lt;/p&gt;
+
+&lt;p&gt;The state gets pushed and popped onto a stack, either with the
+&lt;code&gt;scope&lt;/code&gt; macro, or by calling a rule. &lt;code&gt;scope&lt;/code&gt;
+is convenient when a rule is going to branch, and you want to define
+the changes for each branch in terms of your rule’s starting state,
+rather than defining the second branch’s state in terms of the first’s.&lt;/p&gt;
+
+&lt;p class=&quot;message&quot;&gt;next?&lt;/p&gt;
+
+&lt;p&gt;Please note! I’d be happy to take &lt;a href=&quot;https://help.github.com/articles/using-pull-requests&quot;&gt;pull
+requests&lt;/a&gt; for
+this stuff, or anything else that would be neat.&lt;/p&gt;
+
+&lt;p&gt;I want to get some continuation manipulation stuff going to rearrange
+the order in which evaluation occurs. First (read: simplest) I want to
+change the recursion to be breadth first, instead of depth first.
+That’d take care of my tentacle problem above.&lt;/p&gt;
+
+&lt;p&gt;Second, I’d like to experiment with rearranging evaluation so that the
+scale of the current transformation matrix is used to reorder all the
+outstanding rules from largest to smallest. Or vice versa.  Keeping an
+eye on the current scale would also let me cut off recursion
+sooner. Once you’re down to drawing subpixel elements… well. You’d
+have a lot of work to do to influence the final output.&lt;/p&gt;
+
+&lt;p&gt;Third, I’m hoping that while playing with these static alterations to
+control flow, I might come up with some neat way for the user to
+specify control flow, which fits with the style of CFDGs.&lt;/p&gt;
+
+&lt;p&gt;I’d also like to fiddle with the
+&lt;a href=&quot;http://docs.racket-lang.org/guide/parameterize.html&quot;&gt;parameterization&lt;/a&gt;
+of the state. I’m a little worried that what I’m doing to keep the
+state hidden in the background is doing tragic things to the performance.&lt;/p&gt;
+
+&lt;p&gt;Oh! Layers, so you can manipulate the z-index. Which would be
+another way of getting my uncooperative tentacles arranged neatly.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Links, May 2nd</title>
+   <link href="http://hypercomplex.net//2014/05/02/links/"/>
+   <updated>2014-05-02T00:00:00-06:00</updated>
+   <id>http://hypercomplex.net//2014/05/02/links</id>
+   <content type="html">&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://stilldrinking.org/programming-sucks&quot;&gt;Programming Sucks&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Normally I don’t even look at things with titles of the form &lt;code&gt;/Sucks$/&lt;/code&gt;.
+I clicked on this expecting something obnoxious that would upset me
+enough get the blood flowing, and wake me up. Instead I laughed hard
+enough to wake up.&lt;/p&gt;
+
+&lt;p&gt;I appreciate the part about the bridge project; I feel that it conveys a
+sense of the way in which software developers make their own projects
+more miserable. The line or two about Phil are the only ones that
+touch on the expectations of others, though.&lt;/p&gt;
+
+&lt;p&gt;I think that most of the people who purchase bridges have a sense that
+certain design requests become unreasonable once construction has begun.
+And that asking for a bridge twice as big is going to at least double
+your materials costs.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately software developers don’t get the same consideration.
+I’m not sure I know why. (Not that there necessarily has to be a
+single reason.) Perhaps those commissioning us to develop software on
+their behavior are so in awe of our ability to build castles in the
+air (see below) that they assume we can accomplish anything. That’s
+certainly a much more pleasant possibility than the one normally
+bandied about.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://blog.samstokes.co.uk/blog/2014/05/01/what-programming-is-like/&quot;&gt;What Programming is Like&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This one is a response, at least in part, to “Programming Sucks”.  I
+feel it takes “Programming Sucks” a bit too seriously (or maybe
+literally). I see “Programming Sucks” not as a complaint, but rather
+an attempt to explain some negative aspects of programming as an
+activity, which non-programmers probably have no inkling of. This
+piece then comes along an attempts to explain positive aspects of
+programming, which non-programmers probably have no inkling of.&lt;/p&gt;
+
+&lt;p&gt;I feel it is worth pointing out that you can have aspects of an
+activity which you don’t enjoy, while still very much enjoying the
+activity overall. Hikers don’t like bad weather, but you deal with
+a bit of that in exchange for the good weather. Fencers don’t enjoy
+being hit by their opponents, but the winning (or at least interplay
+that happens before losing), makes it worthwhile.&lt;/p&gt;
+
+&lt;p&gt;Building castles in the air is worth it, even if Phil makes us leave
+the railings off all the parapets.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>How to ReCode</title>
+   <link href="http://hypercomplex.net//2014/04/28/recode/"/>
+   <updated>2014-04-28T00:00:00-06:00</updated>
+   <id>http://hypercomplex.net//2014/04/28/recode</id>
+   <content type="html">&lt;p&gt;&lt;div style=&quot;float: right&quot;&gt;&lt;img src=&quot;/assets/2014/04/recode-photocopy.png&quot; width=&quot;200&quot; /&gt;&lt;/div&gt; The &lt;a href=&quot;http://recodeproject.com&quot;&gt;ReCode Project&lt;/a&gt; popped up in 2012,
+with the neat goal of taking old computer art, and writing new
+programs (in &lt;a href=&quot;http://processing.org/&quot;&gt;processing&lt;/a&gt;) that
+regenerate the art, or close approximations.  This is made tricky
+enough by the lack of source code, and little to no description of the
+algorithm(s) used.&lt;/p&gt;
+
+&lt;p&gt;To make it slightly more challenging, the original material looks
+like it was run through a cheap photocopier a couple of times. Weee.&lt;/p&gt;
+
+&lt;p&gt;I came across a link to the project... hm, who knows. Probably some
+awful site with lots of comments. I hadn&#39;t done any work with
+processing at that point. Obviously the thing to do was
+participate.&lt;/p&gt;
+
+&lt;p&gt;I think the art on there can be placed along a sort of &quot;pain in the ass&quot;
+gradient, from most to least:
+&lt;ul&gt;
+&lt;li&gt; The art uses some preexisting bitmapped artwork. Like &lt;a href=&quot;http://recodeproject.com/artwork/v1n3gente&quot;&gt;a picture of some
+guy&lt;/a&gt;. Without the picture, it&#39;ll be hard to duplicate. One of them
+&lt;a href=&quot;http://recodeproject.com/artwork/v1n2universal-declaration-of-human-rights&quot;&gt;clearly
+uses a different photo&lt;/a&gt;. I&#39;m far too particular to do that.
+&lt;/li&gt;
+
+&lt;li&gt;
+One step up, the art uses some nonobvious data. &lt;a href=&quot;http://recodeproject.com/artwork/v1n2detail-from-tapestry&quot;&gt;Or maybe it was just random&lt;/a&gt;. There
+&lt;a href=&quot;http://en.wikipedia.org/wiki/Ciphertext_indistinguishability#Indistinguishable_from_random_noise&quot;&gt;isn&#39;t much difference&lt;/a&gt;. So
+you could generate a bunch of random things which are all in the same style,
+but never exactly the same thing. If I wanted to do that, &lt;a href=&quot;http://www.contextfreeart.org/gallery/search.php?by=kominek&quot;&gt;I&#39;d be playing&lt;/a&gt; with &lt;a href=&quot;http://www.contextfreeart.org/&quot;&gt;context free&lt;/a&gt;.
+&lt;/li&gt;
+
+&lt;li&gt;
+Further along that path, the art uses obvious data. Such as &lt;a href=&quot;http://recodeproject.com/static/img/cards/v2n1/03.png&quot;&gt;US population density&lt;/a&gt;.
+That&#39;s actually kind of tempting.
+&lt;/li&gt;
+
+&lt;li&gt;
+Finally, we reach the nice &quot;easy&quot; pieces, which are almost purely
+geometric.  Like Sture Johannesson&#39;s &quot;&lt;a href=&quot;http://recodeproject.com/artwork/v1n2topographic-form&quot;&gt;Topographic Form&lt;/a&gt;&quot;, which
+ended up being the piece I chose to work on.
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+
+&lt;p&gt;&lt;div style=&quot;float: left&quot;&gt;&lt;img style=&quot;margin-right: 1rem;&quot; src=&quot;/assets/2014/04/recode-topographic.png&quot; width=&quot;200&quot; /&gt;&lt;/div&gt;
+That&#39;s just an excerpt, the original doesn&#39;t have the nice square
+aspect ratio. If you decide to snarf the PDF so you can see the
+original, head&#39;s up: it is 20.2MiB.&lt;/p&gt;
+
+&lt;p&gt;I looked at it for awhile, screwed around some, probably did a little
+bit of whatever I was supposed to be doing. Stuff &#39;n things.&lt;/p&gt;
+
+&lt;p class=&quot;message&quot;&gt;
+the process
+&lt;/p&gt;
+&lt;p&gt;When I look at that I see a circle, with 270° arcs on either side
+of it. Hm, nope, I see three arcs. 270°, 360°, 270°. That&#39;s easier
+to deal with.&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;/assets/2014/04/recode-topographic-arcs.svg&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;Then a half-circle has been extruded along the lengths of
+the arcs, producing a 3D volume. We could stop there, and feed that
+into a ray tracer, and have a nice &quot;realistic&quot; looking image.&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;/assets/2014/04/recode-topographic-povray.png&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;Yeah, about like that! Who doesn&#39;t like some nice perfectly smooth
+jade floating above an infinite checkboard? If you&#39;d like to enjoy
+some 90&#39;s &lt;a href=&quot;http://povray.org/&quot;&gt;POV-Ray&lt;/a&gt; flashbacks, you can &lt;a href=&quot;/assets/2014/04/recode-topographic-povray.pov&quot;&gt;play with the
+source&lt;/a&gt; for that image, too.&lt;/p&gt;
+
+&lt;p&gt;
+&lt;div style=&quot;float: right&quot;&gt;
+&lt;img src=&quot;/assets/2014/04/recode-topographic-nohidden.png&quot; /&gt;
+&lt;/div&gt;
+We&#39;ve got some nice geometry now, but the general appearance isn&#39;t
+even close. Ray tracing clearly wasn&#39;t used. In fact, if you look at
+the inside of circle, near the bottom, I think it is clear that no
+hidden surface removal was performed. My assumption, and what
+I went with in my version, is that it is just made up
+of some lines being drawn in 3D space. The renderer doesn&#39;t have
+any idea that it is depicting solid surfaces.
+&lt;/p&gt;
+
+&lt;p&gt;At this point, you might want to &lt;a href=&quot;http://recodeproject.com/translation/jay-kominek-topographic-form-direct-topographic-form-sture-johannesson&quot;&gt;reference
+my code&lt;/a&gt;. I started with the &lt;code&gt;RaisedArc&lt;/code&gt; class, which
+represents the arc segments, and computes their height. Just some
+trig going on there. Take a point, figure out how high that arc is
+at that point.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;draw&lt;/code&gt; function can then just drag a &quot;pen&quot; across
+the X-Y plane, stopping along the way and asking each arc how high it
+is.  Take the max, and you reconstruct the surface of the object we
+rendered:&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;/assets/2014/04/recode-topographic-toonice.png&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;
+When I hit that, I felt that my decisions up to this point were
+justified. This felt like the same image, and maybe it is even what
+the original artist would&#39;ve wanted to make if they&#39;d had anything
+close to &lt;a href=&quot;http://en.wikipedia.org/wiki/Enhanced_Graphics_Adapter&quot;&gt;EGA&lt;/a&gt;
+resolution available. But they didn&#39;t. So this image is too &quot;nice&quot;,
+and certainly too smooth. Of particular concern, the truncated ends
+of the left and right arcs don&#39;t even look right anymore. In the original,
+they actually hint at a bit of perspective, even though I believe the
+image was rendered orthographically.
+&lt;/p&gt;
+
+&lt;p&gt;&quot;Fixing&quot; the smoothness is taken care of in two steps. First,
+we up the step size (&lt;code&gt;fx_step&lt;/code&gt;) until the lines are
+made of distinct segments. Then &lt;code&gt;noSmooth()&lt;/code&gt; turns off
+processing&#39;s attempts to help us out and make the lines look nicer.
+Conveniently, increasing the step sizes makes the truncation of the
+arcs much rougher, and gives us the pseudo-perspective appearance.
+That&#39;s handy because 1) now I don&#39;t have to do anything else and 2)
+it acts (in my mind) as further evidence that the original was drawn
+orthographically instead of in perspective.&lt;/p&gt;
+
+&lt;center&gt;&lt;img src=&quot;/assets/2014/04/recode-topographic-final.png&quot; /&gt;&lt;/center&gt;
+
+&lt;p&gt;I counted the number of horizontal lines in the original, and sort
+of eyeballed the other proportions. The &lt;code&gt;fy-0.5&lt;/code&gt; in the
+call to &lt;code&gt;computeHeight&lt;/code&gt; is to scoot the geometry around
+until the lines appear to be falling across it as they do in the original.&lt;/p&gt;
+
+&lt;p&gt;The stroke width, and tilt of the X-Y plane were both determined by
+just fiddling around with things. ...I just noticed that the angle I concocted,
+of 28.12° is 0.4907 radians. I&#39;m guessing that means the original used
+a round 0.5 radians. Maybe I&#39;ll change that some time. Ehh.&lt;/p&gt;
+
+&lt;p class=&quot;message&quot;&gt;
+next?
+&lt;/p&gt;
+
+&lt;p&gt;The same &quot;rendering engine&quot; used for this piece could actually be applied
+to the map of the United States referenced above. Clip off stuff outside the
+borders, and replaced &lt;code&gt;RaisedArc&lt;/code&gt; with something that reads a data
+file, and bam. That could be fun.&lt;/p&gt;
+
+&lt;p&gt;I&#39;m also tempted to do Roger Coqart&#39;s &lt;a href=&quot;http://recodeproject.com/artwork/v3n2from-the-square-series&quot;&gt;From
+the Square Series&lt;/a&gt;. It isn&#39;t clear to me that there is a pattern in
+how the lines are placed, but I think we could get fairly close with some
+rules about the distribution of line segments. Perhaps adding them at random
+until they get close to satisfying some rules.&lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      SciCast, Bluefin-21, and GeNIe &middot; hypercomplex
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>hypercomplex</h1>
+      <p class="lead">sure hope it looks harder than it was</p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-item">
+        <a href="/">Home</a>
+      </li>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/about/">About</a>
+            </li>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/prettygood/">Pretty Good</a>
+            </li>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        <a href="/atom.xml">atom</a>
+      </li>
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        jay kominek <code>kominek</code> <code>@</code> <code>gmail.com</code>
+      </li>
+
+      <li class="sidebar-nav-item" style="font-size: 50%">
+        <a href="http://twitter.com/JayKominek">@JayKominek</a>, i guess
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">SciCast, Bluefin-21, and GeNIe</h1>
+  <span class="post-date">08 June 2014</span>
+  <p>I’m going to assume you’re familiar with
+<a href="https://scicast.org/#!/about">SciCast</a>; if you aren’t, that link is the
+place to start. Or maybe <a href="http://en.wikipedia.org/wiki/SciCast">Wikipedia</a>.</p>
+
+<p>There has been a open question on SciCast, <a href="https://scicast.org/#!/questions/464/safe">“Will Bluefin-21 locate
+the black box from Malaysian Airlines flight
+MH-370?”</a>, since mid-April.
+(If you don’t know what <a href="http://en.wikipedia.org/wiki/MH370">MH370</a>
+is, I envy you.) It <a href="https://scicast.org/#!/questions/464/trades/safe">dropped fairly
+quickly</a> to
+predicting that there was a 10% chance of Bluefin-21 locating MH370.
+Early on, that was reasonable enough. There was evidence pings from
+the black box had been detected in the region, so the entire Indian
+Ocean had been narrowed down to a relatively small area.</p>
+
+<p>Unfortunately weeks passed and on May 29th <a href="http://www.bbc.com/news/world-asia-27615173">Bluefin-21’s mission was
+completed</a>,
+unsuccessfully. Bluefin-21 then stopped looking. At this point, I (and
+others) expected the forecast to plummet. But folks kept
+pushing it back up. In fact I count about 5 or 6 distinct individuals
+who moved the probability up after completion of the mission. There
+are perfectly good reasons related to the nature of the prediction
+market for some of those adjustments.</p>
+
+<p>I’m interested in the bad reasons.</p>
+
+<p>One of the bad reasons that could apply to any question, but seems to
+be a very likely candidate for this question, is being unaware of the
+state of the world. Forecasting the future when you don’t know the
+present just isn’t going to turn out very well. In the best case,
+you’ve got really good priors, and you’re stuck working off of
+those. Realistically, your priors aren’t that great. Evidence could
+help them out, but you’re not updating.</p>
+
+<p>In the specific case of the Bluefin-21, it was suggested (by someone
+with whom I have no beef, and am not trying to single out!) that there
+was still a chance MH370 would be discovered by going back and
+reanalyzing the data.</p>
+
+<p>This didn’t seem at all likely to me. I attempted to explain why,
+though in retrospect I think my explanation was poor, and incomplete.</p>
+
+<p>To formalize my reasoning, I hunted around for a software tool that
+would let me crunch the numbers and make a diagram. I turned up
+<a href="http://genie.sis.pitt.edu/">GeNIe</a>, which looked appropriate for the
+task. GeNIe is a GUI on top of SMILE, which is a software library for
+(<em>hand</em> <em>wave</em>) modeling <a href="http://en.wikipedia.org/wiki/Bayesian_network">Bayesian
+networks</a>.</p>
+
+<p>I ended up producing this model and looks like this:</p>
+
+<p><img src="/assets/2014/06/bluefin-before-evidence.png" alt="Before Evidence" /></p>
+
+<p>(If you want to fiddle with the model, you can <a href="/assets/2014/06/bluefin-model.xdsl">download it
+here</a>.)</p>
+
+<p>This model assumes Bluefin-21 is 90% effective on the first pass, and
+reanalysis has a 20% chance to find MH370 if it was missed. It also
+assumes that reanalysis will almost certainly happen, but that there
+is only a 10% chance that MH370 is even in the search area. I feel
+that’s generous given the search area, and nature of the acoustic
+evidence. (I never thought the surface debris was likely to be
+related.  There’s a <a href="http://en.wikipedia.org/wiki/Great_Pacific_garbage_patch">lot of crap in the
+ocean</a>. That
+they found so little is just evidence of the size of the ocean.)</p>
+
+<p>Based on all of that, the model says there’s a 9% chance Bluefin-21 would
+find MH370. Which is about where the SciCast prediction was at. The
+other forecasters might’ve been giving the pings more credit. Anyways,
+we’re kind of in the ballpark. So let’s now tell the model that Bluefin-21
+didn’t find MH370 on the first pass, and see what it says:</p>
+
+<p><img src="/assets/2014/06/bluefin-after-evidence.png" alt="After Evidence" /></p>
+
+<p>Weee, the chance that Bluefin-21 will find anything has now dropped to
+basically zero. And that’s because not finding the MH370 on the first
+pass is evidence that it isn’t there, even if Bluefin-21 is
+imperfect. In fact, the better Bluefin-21 is, the stronger the
+evidence of absence. For any chance of detection to remain, Bluefin-21
+would have to be good at collecting data, but the analysis would have
+to be awful and error prone, unless you repeated it. I didn’t attempt
+to model that in, because it would be so weird.</p>
+
+<p>First, sonar is well understood, and Bluefin-21 was using COTS units
+that basically produce a elevation model of the ocean floor. Second,
+if “trying harder” upped the odds of detection, then the operators
+would throw more CPU or man power at it until they’d raised the
+likelihood of detection as high as it was reasonably going to go. The
+cost of the search had hit at least $44 million before Bluefin-21 got
+wet; some additional data analysis isn’t going to put a dent in that.
+(Maybe you could find a signal processing researcher to apply some
+cutting edge stuff, but if that didn’t happen at the start of the
+search, I don’t think it’ll happen before the question expires.)</p>
+
+<p>This question is pretty much over, but if you have suggestions for
+making the model better, I’d be interested in hearing them. This is
+the first thing I’ve done with this sort of modeling tool. So I’m
+sure some things could be done better.</p>
+
+<p class="message">
+next?
+</p>
+
+<p>I plan to make further use of GeNIe for my SciCasting. For starters,
+the models make it easier to break apart the separate components of my
+belief. I can also tweak nodes and have the machine handle propagating
+the change, which will be much more accurate than fuzzily doing it in
+my head.</p>
+
+<p>Using some of the fancier(?) features should also allow me to
+focus my forecasting efforts and points on the questions where I can
+get the best returns. (Basically by answering the obvious question
+of “Am I sure enough to make it worth it?”)</p>
+
+<p>Finally, I’d like to put my models up like this, along with some
+explanation. That way I can demonstrate that I’m predicting the future
+on the basis of cunning and wit, not piles of luck. ☺</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/04/24/last-line/">
+            The Last Line Effect and Extralinguistic Mechanisms
+            <small>24 Apr 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/08/17/musical-interlude-1/">
+            Musical Interlude 1
+            <small>17 Aug 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/08/02/lmsr-interactive/">
+            LMSR Made Interactive
+            <small>02 Aug 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>
